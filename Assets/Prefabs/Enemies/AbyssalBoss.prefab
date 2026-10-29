@@ -198,7 +198,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9299e28d0b21c684bbac829a50515e76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyHealth
-  maxHealth: 45
+  maxHealth: 60
   currentHealth: 45
   autoDestroy: 1
   destroyDelay: 2
@@ -232,17 +232,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 915858204790ad648a1c3ba89f85aa30, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BossAI
-  bossName: MALAKOR, THE ABYSSAL WARLORD
-  bossMaxHealth: 45
-  chaseSpeed: 3.6
+  bossName: "THE INFERNAL EXECUTIONER \u2014 WARDEN OF THE DAMNED"
+  bossMaxHealth: 60
+  phase2Threshold: 39
+  phase3Threshold: 18
+  chaseSpeedPhase1: 3.8
   chaseSpeedPhase2: 5.5
+  chaseSpeedPhase3: 6.2
   attackRangeMelee: 2.6
   attackRangeSlam: 4.2
-  slashDamage: 2
+  cleaveDamage: 2
   slamDamage: 3
+  cataclysmDamage: 4
   shockwaveDamage: 2
-  attackCooldown: 1.6
+  attackCooldownPhase1: 1.25
   attackCooldownPhase2: 0.65
+  attackCooldownPhase3: 0.42
   maxPoise: 10
   sittingSprite: {fileID: 21300000, guid: dd73438ca0654614b898fe5c98558234, type: 3}
   riseSprite: {fileID: 21300000, guid: f2ddec00b2d64ee0821538172078d30b, type: 3}
@@ -344,6 +349,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BossAttackHitbox
   damage: 2
+  isParryable: 1
 --- !u!1 &8255424580382685268
 GameObject:
   m_ObjectHideFlags: 0

@@ -8,9 +8,10 @@ public enum BossState
     RoarIntro,
     Idle,
     Chase,
-    AttackSlash,
+    AttackCleave,
     AttackSlam,
     AttackShockwave,
+    AttackCombo,
     Hurt,
     Dead
 }
@@ -21,21 +22,30 @@ public enum BossState
 public class BossAI : MonoBehaviour
 {
     [Header("Boss Identity")]
-    [SerializeField] private string bossName = "MALAKOR, THE ABYSSAL WARLORD";
-    [SerializeField] private int bossMaxHealth = 45;
+    [SerializeField] private string bossName = "THE INFERNAL EXECUTIONER — WARDEN OF THE DAMNED";
+    [SerializeField] private int bossMaxHealth = 60;
 
-    [Header("Locomotion")]
-    [SerializeField] private float chaseSpeed = 3.8f;
-    [SerializeField] private float chaseSpeedPhase2 = 5.5f;
+    [Header("Phase Thresholds (HP)")]
+    [SerializeField] private int phase2Threshold = 39; // 65% of 60 HP
+    [SerializeField] private int phase3Threshold = 18; // 30% of 60 HP
+
+    [Header("Locomotion Speeds")]
+    [SerializeField] private float chaseSpeedPhase1 = 3.8f;
+    [SerializeField] private float chaseSpeedPhase2 = 5.2f;
+    [SerializeField] private float chaseSpeedPhase3 = 6.2f;
     [SerializeField] private float attackRangeMelee = 2.8f;
     [SerializeField] private float attackRangeSlam = 4.8f;
 
     [Header("Combat Stats")]
-    [SerializeField] private int slashDamage = 2;
+    [SerializeField] private int cleaveDamage = 2;
     [SerializeField] private int slamDamage = 3;
+    [SerializeField] private int cataclysmDamage = 4;
     [SerializeField] private int shockwaveDamage = 2;
-    [SerializeField] private float attackCooldown = 1.3f;
-    [SerializeField] private float attackCooldownPhase2 = 0.65f;
+
+    [Header("Attack Cooldowns")]
+    [SerializeField] private float attackCooldownPhase1 = 1.25f;
+    [SerializeField] private float attackCooldownPhase2 = 0.70f;
+    [SerializeField] private float attackCooldownPhase3 = 0.42f;
 
     [Header("Poise & Hyper-Armor")]
     [SerializeField] private int maxPoise = 10;
@@ -44,7 +54,7 @@ public class BossAI : MonoBehaviour
     private bool isHyperArmored = false;
 
     [Header("Phase State")]
-    private bool isPhase2 = false;
+    private int currentPhase = 1;
     private bool isPhaseTransitioning = false;
 
     [Header("Skull Perch Cinematic")]
@@ -69,7 +79,7 @@ public class BossAI : MonoBehaviour
 
     // State Tracking
     private BossState currentState = BossState.Dormant;
-    private int facingDirection = -1; // -1 = left
+    private int facingDirection = -1; // -1 = left, 1 = right
     private float nextActionTime;
     private bool hasTriggeredIntro = false;
     private int attackCycle = 0;
@@ -81,6 +91,7 @@ public class BossAI : MonoBehaviour
     public static event Action<BossAI, int> OnBossPhaseChanged; // (boss, phase)
 
     public string BossName => bossName;
+    public int CurrentPhase => currentPhase;
     public EnemyHealth Health
     {
         get
@@ -91,7 +102,6 @@ public class BossAI : MonoBehaviour
     }
     public BossState CurrentState => currentState;
     public bool IsDead => currentState == BossState.Dead;
-    public bool IsPhase2 => isPhase2;
 
     private void EnsureComponents()
     {
@@ -148,9 +158,9 @@ public class BossAI : MonoBehaviour
         }
 
         currentPoise = maxPoise;
+        currentPhase = 1;
         UpdateFacing(-1);
 
-        // Initial state: perched high upon the Giant Skull in the background
         if (currentState == BossState.Dormant)
         {
             SetupPerchedState();
@@ -179,7 +189,7 @@ public class BossAI : MonoBehaviour
 
         if (spriteRenderer != null)
         {
-            spriteRenderer.sortingOrder = -4; // Rendered in background layer atop skull
+            spriteRenderer.sortingOrder = -4; // Render in background layer atop skull
             if (sittingSprite != null)
             {
                 spriteRenderer.sprite = sittingSprite;
@@ -215,7 +225,7 @@ public class BossAI : MonoBehaviour
             return;
         }
 
-        // Poise regeneration over time if not taking damage
+        // Poise regeneration
         if (poiseRegenTimer > 0f)
         {
             poiseRegenTimer -= Time.deltaTime;
@@ -228,10 +238,9 @@ public class BossAI : MonoBehaviour
         float deltaX = player.position.x - transform.position.x;
         float distToPlayer = Mathf.Abs(deltaX);
 
-        // 1. Perched on Skull in the Background until player reaches arena (X >= 59.0)
+        // 1. Perched on Skull until player reaches arena (X >= 59.0)
         if (currentState == BossState.Dormant)
         {
-            // Subtle brooding crimson silhouette pulse on the skull
             if (spriteRenderer != null)
             {
                 spriteRenderer.color = Color.Lerp(
@@ -248,7 +257,7 @@ public class BossAI : MonoBehaviour
             return;
         }
 
-        // Face player during chase / idle
+        // Face player during Chase / Idle
         if (currentState == BossState.Idle || currentState == BossState.Chase)
         {
             int targetFacing = deltaX >= 0 ? 1 : -1;
@@ -270,7 +279,7 @@ public class BossAI : MonoBehaviour
                 break;
 
             case BossState.Chase:
-                float currentSpeed = isPhase2 ? chaseSpeedPhase2 : chaseSpeed;
+                float currentSpeed = currentPhase == 3 ? chaseSpeedPhase3 : (currentPhase == 2 ? chaseSpeedPhase2 : chaseSpeedPhase1);
                 if (animator != null) animator.SetFloat("Speed", currentSpeed);
                 rb.linearVelocity = new Vector2(facingDirection * currentSpeed, rb.linearVelocity.y);
 
@@ -294,7 +303,7 @@ public class BossAI : MonoBehaviour
 
     private IEnumerator LeapFromSkullIntroRoutine()
     {
-        // Step 1: Malakor awakens on the Skull Throne
+        // 1. Malakor awakens atop the Skull Throne
         if (spriteRenderer != null)
         {
             spriteRenderer.color = Color.white;
@@ -307,16 +316,15 @@ public class BossAI : MonoBehaviour
         CameraShake.Shake(0.25f, 0.30f);
         AudioManager.Play(SoundID.SwordCharge, 1.0f);
 
-        // Pause as he rises from the throne holding his giant axe
         yield return new WaitForSeconds(0.60f);
 
-        // Step 2: Leap from Skull down into Arena Floor
+        // 2. Leap from Skull down into Arena Floor
         Vector3 startPos = transform.position;
         Vector3 endPos = arenaLandingPosition;
 
         if (spriteRenderer != null)
         {
-            spriteRenderer.sortingOrder = 2; // Jump into the foreground
+            spriteRenderer.sortingOrder = 2; // Move to foreground layer
             if (leapApexSprite != null)
             {
                 spriteRenderer.sprite = leapApexSprite;
@@ -333,7 +341,6 @@ public class BossAI : MonoBehaviour
             elapsed += Time.deltaTime;
             float t = Mathf.Clamp01(elapsed / leapDuration);
 
-            // Parabolic leap trajectory
             float curX = Mathf.Lerp(startPos.x, endPos.x, t);
             float curY = Mathf.Lerp(startPos.y, endPos.y, t) + Mathf.Sin(t * Mathf.PI) * 2.2f;
 
@@ -343,7 +350,7 @@ public class BossAI : MonoBehaviour
 
         transform.position = endPos;
 
-        // Step 3: Ground Impact on Arena Floor
+        // 3. Ground Impact on Arena Floor
         if (rb != null)
         {
             rb.gravityScale = 3f;
@@ -358,13 +365,12 @@ public class BossAI : MonoBehaviour
         CameraShake.Shake(0.70f, 0.50f);
         AudioManager.Play(SoundID.BossLightningSlam, 1.30f);
 
-        // Release twin shockwaves across the arena floor
         SpawnShockwaveProjectileDir(1);
         SpawnShockwaveProjectileDir(-1);
 
         yield return new WaitForSeconds(0.25f);
 
-        // Step 4: Awakening Roar
+        // 4. Awakening Roar
         if (animator != null)
         {
             animator.enabled = true;
@@ -377,7 +383,7 @@ public class BossAI : MonoBehaviour
 
         yield return new WaitForSeconds(1.4f);
 
-        // Step 5: Engage the player!
+        // 5. Engage the player
         currentState = BossState.Chase;
         nextActionTime = Time.time + 0.3f;
     }
@@ -389,58 +395,110 @@ public class BossAI : MonoBehaviour
 
         attackCycle++;
 
-        // Melee Range (dist <= 2.8)
+        if (currentPhase == 1)
+        {
+            ChoosePhase1Attack(dist);
+        }
+        else if (currentPhase == 2)
+        {
+            ChoosePhase2Attack(dist);
+        }
+        else
+        {
+            ChoosePhase3Attack(dist);
+        }
+    }
+
+    private void ChoosePhase1Attack(float dist)
+    {
+        // Phase 1 — The Executioner (Controlled, Telegraphed, Readable)
         if (dist <= attackRangeMelee)
         {
-            if (isPhase2)
-            {
-                float roll = UnityEngine.Random.value;
-                if (roll < 0.50f)
-                    StartAttack(DoubleSlashRoutine());
-                else if (roll < 0.80f)
-                    StartAttack(SlamAttackRoutine());
-                else
-                    StartAttack(BackstepRoutine());
-            }
+            if (attackCycle % 3 == 0)
+                StartAttack(RuinousOverheadRoutine());
             else
-            {
-                if (attackCycle % 3 == 0)
-                    StartAttack(SlamAttackRoutine());
-                else
-                    StartAttack(SlashAttackRoutine());
-            }
+                StartAttack(ExecutionerCleaveRoutine());
         }
-        // Mid Range (2.8 < dist <= 6.5)
         else if (dist <= attackRangeSlam)
         {
-            if (isPhase2)
-            {
-                float roll = UnityEngine.Random.value;
-                if (roll < 0.45f)
-                    StartAttack(LeapSlamRoutine());
-                else if (roll < 0.80f)
-                    StartAttack(ShockwaveAttackRoutine());
-                else
-                    StartAttack(DoubleSlashRoutine());
-            }
+            float roll = UnityEngine.Random.value;
+            if (roll < 0.40f)
+                StartAttack(CrimsonAdvanceRoutine());
+            else if (roll < 0.70f)
+                StartAttack(RuinousOverheadRoutine());
             else
-            {
-                float roll = UnityEngine.Random.value;
-                if (roll < 0.40f)
-                    StartAttack(LeapSlamRoutine());
-                else if (roll < 0.70f)
-                    StartAttack(SlamAttackRoutine());
-                else
-                    StartAttack(ShockwaveAttackRoutine());
-            }
+                StartAttack(HellfireShockwaveRoutine(1));
         }
-        // Long Range (dist > 6.5) - Close the gap aggressively!
+        else
+        {
+            if (UnityEngine.Random.value < 0.60f)
+                StartAttack(CrimsonAdvanceRoutine());
+            else
+                StartAttack(HellfireShockwaveRoutine(1));
+        }
+    }
+
+    private void ChoosePhase2Attack(float dist)
+    {
+        // Phase 2 — Blood Awakening (Faster combos, delayed bait slams, leaping gap closers)
+        if (dist <= attackRangeMelee)
+        {
+            float roll = UnityEngine.Random.value;
+            if (roll < 0.45f)
+                StartAttack(BloodCleaveComboRoutine());
+            else if (roll < 0.75f)
+                StartAttack(DelayedOverheadSlamRoutine());
+            else
+                StartAttack(ShadowBackstepRoutine());
+        }
+        else if (dist <= attackRangeSlam)
+        {
+            float roll = UnityEngine.Random.value;
+            if (roll < 0.40f)
+                StartAttack(AbyssalLeapSlamRoutine());
+            else if (roll < 0.75f)
+                StartAttack(HellfireShockwaveRoutine(2));
+            else
+                StartAttack(DelayedOverheadSlamRoutine());
+        }
         else
         {
             if (UnityEngine.Random.value < 0.65f)
-                StartAttack(LeapSlamRoutine());
+                StartAttack(AbyssalLeapSlamRoutine());
             else
-                StartAttack(ShockwaveAttackRoutine());
+                StartAttack(HellfireShockwaveRoutine(2));
+        }
+    }
+
+    private void ChoosePhase3Attack(float dist)
+    {
+        // Phase 3 — Final Judgment (Cataclysmic leaps, 3-hit fury, rapid shockwave barrage)
+        if (dist <= attackRangeMelee)
+        {
+            float roll = UnityEngine.Random.value;
+            if (roll < 0.50f)
+                StartAttack(ChainedFuryRoutine());
+            else if (roll < 0.80f)
+                StartAttack(CataclysmicExecutionRoutine());
+            else
+                StartAttack(ShadowBackstepRoutine());
+        }
+        else if (dist <= attackRangeSlam)
+        {
+            float roll = UnityEngine.Random.value;
+            if (roll < 0.45f)
+                StartAttack(CataclysmicExecutionRoutine());
+            else if (roll < 0.80f)
+                StartAttack(JudgmentShockwaveBarrageRoutine());
+            else
+                StartAttack(ChainedFuryRoutine());
+        }
+        else
+        {
+            if (UnityEngine.Random.value < 0.60f)
+                StartAttack(CataclysmicExecutionRoutine());
+            else
+                StartAttack(JudgmentShockwaveBarrageRoutine());
         }
     }
 
@@ -462,74 +520,135 @@ public class BossAI : MonoBehaviour
         isHyperArmored = false;
     }
 
-    // --- ATTACK ROUTINES ---
+    // --- PHASE 1 MOVES ---
 
-    // 1. Standard Heavy Slash (Phase 1 Primary)
-    private IEnumerator SlashAttackRoutine()
+    // 1. Executioner's Cleave: Heavy horizontal strike, readable telegraph, blockable and parryable
+    private IEnumerator ExecutionerCleaveRoutine()
     {
-        currentState = BossState.AttackSlash;
+        currentState = BossState.AttackCleave;
         isHyperArmored = true;
         rb.linearVelocity = Vector2.zero;
 
         if (animator != null) animator.SetTrigger("Slash");
         AudioManager.Play(SoundID.BossAxeSlash, 1.0f);
 
-        // Windup
-        yield return new WaitForSeconds(0.32f);
+        // Windup window with clear visual telegraph
+        yield return new WaitForSeconds(0.36f);
 
-        // Active slash window
+        // Active strike window (PARRYABLE)
         if (meleeHitbox != null)
         {
             meleeHitbox.SetFacing(facingDirection);
-            meleeHitbox.EnableHitbox(slashDamage);
+            meleeHitbox.EnableHitbox(cleaveDamage, parryable: true);
         }
 
-        yield return new WaitForSeconds(0.28f);
+        yield return new WaitForSeconds(0.25f);
         if (meleeHitbox != null) meleeHitbox.DisableHitbox();
 
         isHyperArmored = false;
 
-        // Recovery
-        yield return new WaitForSeconds(0.30f);
+        // Punishable recovery window
+        yield return new WaitForSeconds(0.35f);
         currentState = BossState.Idle;
-        nextActionTime = Time.time + (isPhase2 ? attackCooldownPhase2 : attackCooldown);
+        nextActionTime = Time.time + attackCooldownPhase1;
     }
 
-    // 2. Relentless 2-Hit Slash Combo (Phase 2 Devastating Cleave)
-    private IEnumerator DoubleSlashRoutine()
+    // 2. Ruinous Overhead: Slow vertical slam punishing close players, unparryable
+    private IEnumerator RuinousOverheadRoutine()
     {
-        currentState = BossState.AttackSlash;
+        currentState = BossState.AttackSlam;
         isHyperArmored = true;
         rb.linearVelocity = Vector2.zero;
 
-        // --- STRIKE 1: Downward Cleave ---
+        if (animator != null) animator.SetTrigger("Slam");
+
+        // Slow, heavy windup
+        yield return new WaitForSeconds(0.50f);
+
+        // Impact ground
+        AudioManager.Play(SoundID.BossLightningSlam, 1.10f);
+        CameraShake.Shake(0.40f, 0.35f);
+
+        if (meleeHitbox != null)
+        {
+            meleeHitbox.SetFacing(facingDirection);
+            meleeHitbox.EnableHitbox(slamDamage, parryable: false); // Unparryable heavy slam
+        }
+
+        yield return new WaitForSeconds(0.25f);
+        if (meleeHitbox != null) meleeHitbox.DisableHitbox();
+
+        isHyperArmored = false;
+
+        // Recovery opening
+        yield return new WaitForSeconds(0.40f);
+        currentState = BossState.Idle;
+        nextActionTime = Time.time + attackCooldownPhase1;
+    }
+
+    // 3. Crimson Advance: Threatening stalking approach into an Executioner Cleave
+    private IEnumerator CrimsonAdvanceRoutine()
+    {
+        currentState = BossState.Chase;
+        float stalkDuration = 0.55f;
+        float elapsed = 0f;
+
+        while (elapsed < stalkDuration)
+        {
+            elapsed += Time.deltaTime;
+            if (player != null)
+            {
+                int targetFacing = (player.position.x - transform.position.x) >= 0 ? 1 : -1;
+                UpdateFacing(targetFacing);
+                if (Mathf.Abs(player.position.x - transform.position.x) <= attackRangeMelee)
+                    break;
+            }
+
+            if (animator != null) animator.SetFloat("Speed", chaseSpeedPhase1 * 1.2f);
+            rb.linearVelocity = new Vector2(facingDirection * chaseSpeedPhase1 * 1.2f, rb.linearVelocity.y);
+            yield return null;
+        }
+
+        rb.linearVelocity = Vector2.zero;
+        yield return StartCoroutine(ExecutionerCleaveRoutine());
+    }
+
+    // --- PHASE 2 MOVES ---
+
+    // 4. Blood Cleave Combo: 2-hit rhythm combo (Downward cleave -> dash step -> reverse uppercut)
+    private IEnumerator BloodCleaveComboRoutine()
+    {
+        currentState = BossState.AttackCombo;
+        isHyperArmored = true;
+        rb.linearVelocity = Vector2.zero;
+
+        // --- HIT 1: Downward Cleave (Parryable) ---
         if (animator != null) animator.SetTrigger("Slash");
-        AudioManager.Play(SoundID.BossAxeSlash, 1.0f);
+        AudioManager.Play(SoundID.BossAxeSlash, 1.05f);
 
         yield return new WaitForSeconds(0.26f);
 
         if (meleeHitbox != null)
         {
             meleeHitbox.SetFacing(facingDirection);
-            meleeHitbox.EnableHitbox(slashDamage);
+            meleeHitbox.EnableHitbox(cleaveDamage, parryable: true);
         }
 
         yield return new WaitForSeconds(0.20f);
         if (meleeHitbox != null) meleeHitbox.DisableHitbox();
 
         // Forward dash step
-        rb.linearVelocity = new Vector2(facingDirection * (isPhase2 ? 7.0f : 4.5f), rb.linearVelocity.y);
+        rb.linearVelocity = new Vector2(facingDirection * 7.0f, rb.linearVelocity.y);
         yield return new WaitForSeconds(0.14f);
         rb.linearVelocity = Vector2.zero;
 
-        // Re-align facing toward player
         if (player != null)
         {
             int targetFacing = (player.position.x - transform.position.x) >= 0 ? 1 : -1;
             UpdateFacing(targetFacing);
         }
 
-        // --- STRIKE 2: Reverse Uppercut Cleave ---
+        // --- HIT 2: Reverse Uppercut (Parryable) ---
         if (animator != null) animator.SetTrigger("Slash");
         AudioManager.Play(SoundID.BossAxeSlash, 1.15f);
 
@@ -538,22 +657,21 @@ public class BossAI : MonoBehaviour
         if (meleeHitbox != null)
         {
             meleeHitbox.SetFacing(facingDirection);
-            meleeHitbox.EnableHitbox(slashDamage + 1); // Extra damage on second strike
+            meleeHitbox.EnableHitbox(cleaveDamage + 1, parryable: true);
         }
 
-        yield return new WaitForSeconds(0.22f);
+        yield return new WaitForSeconds(0.20f);
         if (meleeHitbox != null) meleeHitbox.DisableHitbox();
 
         isHyperArmored = false;
 
-        // Short recovery
-        yield return new WaitForSeconds(isPhase2 ? 0.20f : 0.35f);
+        yield return new WaitForSeconds(0.25f);
         currentState = BossState.Idle;
-        nextActionTime = Time.time + (isPhase2 ? attackCooldownPhase2 : attackCooldown);
+        nextActionTime = Time.time + (currentPhase == 3 ? attackCooldownPhase3 : attackCooldownPhase2);
     }
 
-    // 3. Stationary Thunder Slam
-    private IEnumerator SlamAttackRoutine()
+    // 5. Delayed Overhead Slam: Designed specifically to catch premature roll/panic dodges
+    private IEnumerator DelayedOverheadSlamRoutine()
     {
         currentState = BossState.AttackSlam;
         isHyperArmored = true;
@@ -561,66 +679,57 @@ public class BossAI : MonoBehaviour
 
         if (animator != null) animator.SetTrigger("Slam");
 
-        // Windup & leap
-        yield return new WaitForSeconds(0.38f);
+        // Extended delayed windup - holds axe at apex
+        yield return new WaitForSeconds(0.70f);
 
-        // Impact ground
-        AudioManager.Play(SoundID.BossLightningSlam, 1.1f);
-        CameraShake.Shake(0.40f, 0.40f);
+        // Violent slam down
+        AudioManager.Play(SoundID.BossLightningSlam, 1.20f);
+        CameraShake.Shake(0.50f, 0.40f);
 
         if (meleeHitbox != null)
         {
             meleeHitbox.SetFacing(facingDirection);
-            meleeHitbox.EnableHitbox(isPhase2 ? slamDamage + 1 : slamDamage);
+            meleeHitbox.EnableHitbox(slamDamage + 1, parryable: false);
         }
 
-        // In Phase 2: Dual ground ripples
-        if (isPhase2)
-        {
-            SpawnShockwaveProjectileDir(1);
-            SpawnShockwaveProjectileDir(-1);
-        }
+        // Twin shockwaves ripple outwards
+        SpawnShockwaveProjectileDir(1);
+        SpawnShockwaveProjectileDir(-1);
 
         yield return new WaitForSeconds(0.25f);
         if (meleeHitbox != null) meleeHitbox.DisableHitbox();
 
         isHyperArmored = false;
 
-        // Stagger recovery
-        yield return new WaitForSeconds(isPhase2 ? 0.25f : 0.40f);
+        yield return new WaitForSeconds(0.28f);
         currentState = BossState.Idle;
-        nextActionTime = Time.time + (isPhase2 ? attackCooldownPhase2 : attackCooldown);
+        nextActionTime = Time.time + (currentPhase == 3 ? attackCooldownPhase3 : attackCooldownPhase2);
     }
 
-    // 4. Abyssal Leap Slam (Dynamic Gap-Closer)
-    private IEnumerator LeapSlamRoutine()
+    // 6. Abyssal Leap Slam: High-velocity gap-closer
+    private IEnumerator AbyssalLeapSlamRoutine()
     {
         currentState = BossState.AttackSlam;
         isHyperArmored = true;
 
         if (animator != null) animator.SetTrigger("Slam");
 
-        // Crouch preparation
-        yield return new WaitForSeconds(0.22f);
+        yield return new WaitForSeconds(0.20f);
 
-        // Calculate launch trajectory toward player
         float targetX = player != null ? player.position.x : transform.position.x + facingDirection * 5f;
-        targetX = Mathf.Clamp(targetX, 60.5f, 83.5f); // Stay within arena boundaries
+        targetX = Mathf.Clamp(targetX, 60.5f, 83.5f);
         float diffX = targetX - transform.position.x;
         int targetFacing = diffX >= 0 ? 1 : -1;
         UpdateFacing(targetFacing);
 
-        // Launch into air
-        float jumpVx = Mathf.Clamp(diffX * 1.6f, -11f, 11f);
-        rb.linearVelocity = new Vector2(jumpVx, 10.5f);
+        float jumpVx = Mathf.Clamp(diffX * 1.7f, -12f, 12f);
+        rb.linearVelocity = new Vector2(jumpVx, 11f);
 
-        // Mid-air ascent
         yield return new WaitForSeconds(0.40f);
 
-        // Force ground smash descent
-        rb.linearVelocity = new Vector2(jumpVx * 0.4f, -14f);
+        // Force ground slam descent
+        rb.linearVelocity = new Vector2(jumpVx * 0.4f, -15f);
 
-        // Wait until boss reaches ground
         float timeout = 1.0f;
         while (timeout > 0f && rb.linearVelocity.y < -0.1f)
         {
@@ -630,76 +739,226 @@ public class BossAI : MonoBehaviour
 
         rb.linearVelocity = Vector2.zero;
 
-        // Ground Impact Cataclysm
         AudioManager.Play(SoundID.BossLightningSlam, 1.25f);
         CameraShake.Shake(0.55f, 0.45f);
 
         if (meleeHitbox != null)
         {
             meleeHitbox.SetFacing(facingDirection);
-            meleeHitbox.EnableHitbox(isPhase2 ? slamDamage + 1 : slamDamage);
+            meleeHitbox.EnableHitbox(slamDamage + 1, parryable: false);
         }
 
-        // Ground shockwave release
-        if (isPhase2)
-        {
-            SpawnShockwaveProjectileDir(1);
-            SpawnShockwaveProjectileDir(-1);
-        }
-        else
-        {
-            SpawnShockwaveProjectileDir(facingDirection);
-        }
+        SpawnShockwaveProjectileDir(1);
+        SpawnShockwaveProjectileDir(-1);
 
-        yield return new WaitForSeconds(0.26f);
+        yield return new WaitForSeconds(0.25f);
         if (meleeHitbox != null) meleeHitbox.DisableHitbox();
 
         isHyperArmored = false;
 
-        yield return new WaitForSeconds(isPhase2 ? 0.25f : 0.45f);
+        yield return new WaitForSeconds(0.24f);
         currentState = BossState.Idle;
-        nextActionTime = Time.time + (isPhase2 ? attackCooldownPhase2 : attackCooldown);
+        nextActionTime = Time.time + (currentPhase == 3 ? attackCooldownPhase3 : attackCooldownPhase2);
     }
 
-    // 5. Crescent Shockwave (Single in Phase 1, Rapid Dual Barrage in Phase 2)
-    private IEnumerator ShockwaveAttackRoutine()
+    // 7. Hellfire Shockwave: Ground crescent projectile(s)
+    private IEnumerator HellfireShockwaveRoutine(int count)
     {
         currentState = BossState.AttackShockwave;
         rb.linearVelocity = Vector2.zero;
 
-        int waves = isPhase2 ? 2 : 1;
-        for (int w = 0; w < waves; w++)
+        for (int i = 0; i < count; i++)
         {
             if (animator != null) animator.SetTrigger("Shockwave");
 
-            yield return new WaitForSeconds(isPhase2 ? 0.28f : 0.40f);
+            yield return new WaitForSeconds(0.32f);
 
             AudioManager.Play(SoundID.BossShockwaveLaunch, 1.0f);
             SpawnShockwaveProjectile();
 
-            yield return new WaitForSeconds(isPhase2 ? 0.24f : 0.35f);
+            yield return new WaitForSeconds(0.24f);
         }
 
         currentState = BossState.Idle;
-        nextActionTime = Time.time + (isPhase2 ? attackCooldownPhase2 : attackCooldown);
+        nextActionTime = Time.time + (currentPhase == 3 ? attackCooldownPhase3 : (currentPhase == 2 ? attackCooldownPhase2 : attackCooldownPhase1));
     }
 
-    // 6. Tactical Shadow Backstep Counter
-    private IEnumerator BackstepRoutine()
+    // 8. Tactical Shadow Backstep
+    private IEnumerator ShadowBackstepRoutine()
     {
         rb.linearVelocity = Vector2.zero;
 
-        // Shadow dash backwards
-        rb.linearVelocity = new Vector2(-facingDirection * 9f, 2.5f);
+        rb.linearVelocity = new Vector2(-facingDirection * 9.5f, 2.5f);
         CameraShake.Shake(0.18f, 0.20f);
 
-        yield return new WaitForSeconds(0.24f);
+        yield return new WaitForSeconds(0.22f);
         rb.linearVelocity = Vector2.zero;
 
         yield return new WaitForSeconds(0.10f);
 
         // Immediate retaliatory strike!
-        StartAttack(SlashAttackRoutine());
+        if (currentPhase == 3)
+            StartAttack(BloodCleaveComboRoutine());
+        else
+            StartAttack(ExecutionerCleaveRoutine());
+    }
+
+    // --- PHASE 3 MOVES ---
+
+    // 9. Cataclysmic Execution: Ultimate apex jump with earth fissure & dual shockwaves
+    private IEnumerator CataclysmicExecutionRoutine()
+    {
+        currentState = BossState.AttackSlam;
+        isHyperArmored = true;
+
+        if (animator != null) animator.SetTrigger("Roar");
+        AudioManager.Play(SoundID.BossRoar, 1.30f);
+        CameraShake.Shake(0.40f, 0.35f);
+
+        yield return new WaitForSeconds(0.30f);
+
+        // Apex jump
+        float targetX = player != null ? player.position.x : transform.position.x;
+        targetX = Mathf.Clamp(targetX, 60.5f, 83.5f);
+        float diffX = targetX - transform.position.x;
+        int targetFacing = diffX >= 0 ? 1 : -1;
+        UpdateFacing(targetFacing);
+
+        rb.linearVelocity = new Vector2(Mathf.Clamp(diffX * 1.8f, -14f, 14f), 13f);
+
+        // Apex pause
+        yield return new WaitForSeconds(0.45f);
+
+        // Plunge downwards
+        rb.linearVelocity = new Vector2(0f, -18f);
+
+        float timeout = 1.0f;
+        while (timeout > 0f && rb.linearVelocity.y < -0.1f)
+        {
+            timeout -= Time.deltaTime;
+            yield return null;
+        }
+
+        rb.linearVelocity = Vector2.zero;
+
+        // Cataclysm impact
+        AudioManager.Play(SoundID.BossLightningSlam, 1.35f);
+        CameraShake.Shake(0.85f, 0.55f);
+
+        if (meleeHitbox != null)
+        {
+            meleeHitbox.SetFacing(facingDirection);
+            meleeHitbox.EnableHitbox(cataclysmDamage, parryable: false);
+        }
+
+        // Rapid dual ground shockwaves
+        SpawnShockwaveProjectileDir(1);
+        SpawnShockwaveProjectileDir(-1);
+
+        yield return new WaitForSeconds(0.28f);
+        if (meleeHitbox != null) meleeHitbox.DisableHitbox();
+
+        isHyperArmored = false;
+
+        yield return new WaitForSeconds(0.22f);
+        currentState = BossState.Idle;
+        nextActionTime = Time.time + attackCooldownPhase3;
+    }
+
+    // 10. Chained Fury: 3-hit rhythm combo (Cleave -> Dash Uppercut -> Overhead Slam)
+    private IEnumerator ChainedFuryRoutine()
+    {
+        currentState = BossState.AttackCombo;
+        isHyperArmored = true;
+        rb.linearVelocity = Vector2.zero;
+
+        // --- STRIKE 1: Horizontal Cleave (Parryable) ---
+        if (animator != null) animator.SetTrigger("Slash");
+        AudioManager.Play(SoundID.BossAxeSlash, 1.10f);
+
+        yield return new WaitForSeconds(0.24f);
+
+        if (meleeHitbox != null)
+        {
+            meleeHitbox.SetFacing(facingDirection);
+            meleeHitbox.EnableHitbox(cleaveDamage, parryable: true);
+        }
+
+        yield return new WaitForSeconds(0.18f);
+        if (meleeHitbox != null) meleeHitbox.DisableHitbox();
+
+        // Forward Dash Step
+        rb.linearVelocity = new Vector2(facingDirection * 8.0f, rb.linearVelocity.y);
+        yield return new WaitForSeconds(0.12f);
+        rb.linearVelocity = Vector2.zero;
+
+        if (player != null)
+        {
+            int targetFacing = (player.position.x - transform.position.x) >= 0 ? 1 : -1;
+            UpdateFacing(targetFacing);
+        }
+
+        // --- STRIKE 2: Reverse Dash Cleave (Parryable) ---
+        if (animator != null) animator.SetTrigger("Slash");
+        AudioManager.Play(SoundID.BossAxeSlash, 1.20f);
+
+        yield return new WaitForSeconds(0.22f);
+
+        if (meleeHitbox != null)
+        {
+            meleeHitbox.SetFacing(facingDirection);
+            meleeHitbox.EnableHitbox(cleaveDamage + 1, parryable: true);
+        }
+
+        yield return new WaitForSeconds(0.18f);
+        if (meleeHitbox != null) meleeHitbox.DisableHitbox();
+
+        // --- STRIKE 3: Finishing Overhead Slam (Unparryable) ---
+        if (animator != null) animator.SetTrigger("Slam");
+
+        yield return new WaitForSeconds(0.35f);
+
+        AudioManager.Play(SoundID.BossLightningSlam, 1.25f);
+        CameraShake.Shake(0.55f, 0.40f);
+
+        if (meleeHitbox != null)
+        {
+            meleeHitbox.SetFacing(facingDirection);
+            meleeHitbox.EnableHitbox(slamDamage + 1, parryable: false);
+        }
+
+        SpawnShockwaveProjectileDir(facingDirection);
+
+        yield return new WaitForSeconds(0.24f);
+        if (meleeHitbox != null) meleeHitbox.DisableHitbox();
+
+        isHyperArmored = false;
+
+        yield return new WaitForSeconds(0.20f);
+        currentState = BossState.Idle;
+        nextActionTime = Time.time + attackCooldownPhase3;
+    }
+
+    // 11. Judgment Shockwave Barrage: Rapid triple crescent projectile barrage
+    private IEnumerator JudgmentShockwaveBarrageRoutine()
+    {
+        currentState = BossState.AttackShockwave;
+        rb.linearVelocity = Vector2.zero;
+
+        for (int i = 0; i < 3; i++)
+        {
+            if (animator != null) animator.SetTrigger("Shockwave");
+
+            yield return new WaitForSeconds(0.22f);
+
+            AudioManager.Play(SoundID.BossShockwaveLaunch, 1.10f);
+            SpawnShockwaveProjectile();
+
+            yield return new WaitForSeconds(0.18f);
+        }
+
+        currentState = BossState.Idle;
+        nextActionTime = Time.time + attackCooldownPhase3;
     }
 
     private void SpawnShockwaveProjectile()
@@ -720,13 +979,53 @@ public class BossAI : MonoBehaviour
         }
     }
 
-    // --- PHASE TRANSITION & POISE HANDLING ---
+    // --- COUNTERPLAY: PARRY INTERFACE ---
+
+    public void OnAttackParried()
+    {
+        if (currentState == BossState.Dead || isPhaseTransitioning) return;
+
+        Debug.Log("<color=#FFEE55>THE INFERNAL EXECUTIONER ATTACK PARRIED! 1.0s STAGGER OPENING!</color>");
+        StopAttackCoroutines();
+        StartCoroutine(ParryStaggerRoutine());
+    }
+
+    private IEnumerator ParryStaggerRoutine()
+    {
+        currentState = BossState.Hurt;
+        rb.linearVelocity = Vector2.zero;
+
+        if (animator != null)
+        {
+            animator.SetFloat("Speed", 0f);
+            animator.SetTrigger("Hit");
+        }
+
+        AudioManager.Play(SoundID.ParryClash, 1.25f);
+        CameraShake.Shake(0.35f, 0.25f);
+
+        // Flash boss yellow/white to signal deflection & stagger
+        if (spriteRenderer != null)
+        {
+            Color orig = spriteRenderer.color;
+            spriteRenderer.color = new Color(1f, 0.95f, 0.4f, 1f);
+            yield return new WaitForSeconds(0.15f);
+            spriteRenderer.color = orig;
+        }
+
+        // Full 1.0 second vulnerable stagger window
+        yield return new WaitForSeconds(0.85f);
+
+        currentState = BossState.Chase;
+        nextActionTime = Time.time + 0.15f;
+    }
+
+    // --- PHASE TRANSITIONS & DAMAGE HANDLING ---
 
     private void HandleDamaged(int dmg)
     {
         if (currentState == BossState.Dead || isPhaseTransitioning) return;
 
-        // Visceral blood splatter on boss
         var bleed = GetComponent<BleedWoundEffect>();
         if (bleed == null) bleed = gameObject.AddComponent<BleedWoundEffect>();
         Vector2 bloodDir = player != null ? ((Vector2)(transform.position - player.position)).normalized + Vector2.up * 0.4f : Vector2.up;
@@ -734,35 +1033,42 @@ public class BossAI : MonoBehaviour
 
         AudioManager.Play(SoundID.BossHurt, 0.95f);
 
-        // Poise damage calculation
         currentPoise -= dmg;
         poiseRegenTimer = 3.5f;
 
-        // Check Phase 2 trigger (at <= 50% HP)
-        if (!isPhase2 && health != null && health.CurrentHealth <= (health.MaxHealth / 2))
+        // Check Phase Transitions
+        if (health != null)
         {
-            StartCoroutine(TriggerPhase2Transition());
-            return;
+            if (currentPhase == 1 && health.CurrentHealth <= phase2Threshold)
+            {
+                StartCoroutine(TriggerPhase2Transition());
+                return;
+            }
+            else if (currentPhase == 2 && health.CurrentHealth <= phase3Threshold)
+            {
+                StartCoroutine(TriggerPhase3Transition());
+                return;
+            }
         }
 
-        // Only stagger if poise is broken AND boss is not in hyper-armor
+        // Stagger on poise break if not hyper-armored
         if (currentPoise <= 0 && !isHyperArmored)
         {
             currentPoise = maxPoise;
-            StartCoroutine(StaggerRoutine());
+            StartCoroutine(PoiseStaggerRoutine());
         }
     }
 
     private IEnumerator TriggerPhase2Transition()
     {
-        isPhase2 = true;
+        currentPhase = 2;
         isPhaseTransitioning = true;
         StopAttackCoroutines();
 
         currentState = BossState.RoarIntro;
         rb.linearVelocity = Vector2.zero;
 
-        // Enraged visual tint & aura
+        // Enraged crimson visual tint
         if (spriteRenderer != null)
             spriteRenderer.color = new Color(1f, 0.45f, 0.45f, 1f);
 
@@ -776,7 +1082,7 @@ public class BossAI : MonoBehaviour
         CameraShake.Shake(0.65f, 0.55f);
 
         OnBossPhaseChanged?.Invoke(this, 2);
-        Debug.Log("<color=#FF2222>PHASE 2 UNLEASHED: MALAKOR ENTERS BLOODRAGE!</color>");
+        Debug.Log("<color=#FF4444>PHASE 2 UNLEASHED: BLOOD AWAKENING!</color>");
 
         yield return new WaitForSeconds(1.8f);
 
@@ -785,7 +1091,39 @@ public class BossAI : MonoBehaviour
         nextActionTime = Time.time + 0.2f;
     }
 
-    private IEnumerator StaggerRoutine()
+    private IEnumerator TriggerPhase3Transition()
+    {
+        currentPhase = 3;
+        isPhaseTransitioning = true;
+        StopAttackCoroutines();
+
+        currentState = BossState.RoarIntro;
+        rb.linearVelocity = Vector2.zero;
+
+        // Apocalyptic crimson visual tint
+        if (spriteRenderer != null)
+            spriteRenderer.color = new Color(1f, 0.15f, 0.15f, 1f);
+
+        if (animator != null)
+        {
+            animator.SetFloat("Speed", 0f);
+            animator.SetTrigger("Roar");
+        }
+
+        AudioManager.Play(SoundID.BossRoar, 1.40f);
+        CameraShake.Shake(0.85f, 0.70f);
+
+        OnBossPhaseChanged?.Invoke(this, 3);
+        Debug.Log("<color=#FF1111>PHASE 3 UNLEASHED: FINAL JUDGMENT — WARDEN OF THE DAMNED!</color>");
+
+        yield return new WaitForSeconds(2.0f);
+
+        isPhaseTransitioning = false;
+        currentState = BossState.Chase;
+        nextActionTime = Time.time + 0.15f;
+    }
+
+    private IEnumerator PoiseStaggerRoutine()
     {
         StopAttackCoroutines();
         currentState = BossState.Hurt;
@@ -798,9 +1136,8 @@ public class BossAI : MonoBehaviour
         }
 
         CameraShake.Shake(0.35f, 0.30f);
-        Debug.Log("BOSS POISE BROKEN! Malakor is staggered!");
+        Debug.Log("BOSS POISE BROKEN! The Executioner staggers!");
 
-        // Stagger opening window
         yield return new WaitForSeconds(1.1f);
 
         currentState = BossState.Chase;
@@ -826,7 +1163,7 @@ public class BossAI : MonoBehaviour
 
         AudioManager.Play(SoundID.BossDeath, 1.0f);
         CameraShake.Shake(0.6f, 0.5f);
-        Debug.Log("BOSS DEFEATED! The Dreadlord has fallen!");
+        Debug.Log("THE INFERNAL EXECUTIONER HAS FALLEN!");
 
         OnBossDefeated?.Invoke();
     }

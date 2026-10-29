@@ -78,6 +78,7 @@ public class PlayerHealingAnimation : MonoBehaviour
         var particleObj = new GameObject("Heal_SpiralParticles");
         particleObj.transform.position = transform.position + new Vector3(0f, 0.5f, 0f);
         var ps = particleObj.AddComponent<ParticleSystem>();
+        ps.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
         var psr = particleObj.GetComponent<ParticleSystemRenderer>();
         var shader = Shader.Find("Sprites/Default");
         if (shader != null) psr.material = new Material(shader);

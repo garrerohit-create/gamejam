@@ -37,6 +37,12 @@ public static class MapBuilder
             Object.DestroyImmediate(g.gameObject);
         }
 
+        var oldBarriers = GameObject.FindObjectsByType<ArenaEntranceBarrier>();
+        foreach (var b in oldBarriers)
+        {
+            Object.DestroyImmediate(b.gameObject);
+        }
+
         // Ensure AudioManager & GameManager
         var audioMgr = GameObject.Find("[AudioManager]");
         if (audioMgr == null)
@@ -204,7 +210,20 @@ public static class MapBuilder
         // Arena Vanguard Guard
         SpawnEnemy(enemiesRoot, new Vector3(66.0f, -0.08f, 0f), 3.5f);
 
-        // Arena Boss (The Abyssal Warlord, seated high on the Giant Skull Throne)
+        // Arena Entrance Sealing Barrier (Locks player inside arena during boss encounter)
+        var barrierObj = new GameObject("ArenaEntranceBarrier");
+        barrierObj.transform.SetParent(obstaclesRoot.transform);
+        barrierObj.transform.position = new Vector3(58.5f, 2.5f, 0f);
+        var barrierCol = barrierObj.AddComponent<BoxCollider2D>();
+        barrierCol.size = new Vector2(0.8f, 10f);
+        barrierCol.isTrigger = false;
+        var barrierSR = barrierObj.AddComponent<SpriteRenderer>();
+        barrierSR.sprite = AssetDatabase.LoadAssetAtPath<Sprite>("Assets/Art/Environment/Stone_Pillar_14.png");
+        barrierSR.color = new Color(0.9f, 0.1f, 0.1f, 0.85f);
+        barrierSR.sortingOrder = 5;
+        barrierObj.AddComponent<ArenaEntranceBarrier>();
+
+        // Arena Boss (The Infernal Executioner — Warden of the Damned)
         SpawnBoss(enemiesRoot, new Vector3(74.5f, 5.8f, 0f));
 
         // 10. The End-of-Map Gate (Passage to the Ascended Realm)

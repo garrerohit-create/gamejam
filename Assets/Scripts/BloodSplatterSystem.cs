@@ -71,6 +71,7 @@ public class BloodSplatterSystem : MonoBehaviour
         bloodObj.transform.position = worldPos;
 
         var ps = bloodObj.AddComponent<ParticleSystem>();
+        ps.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
         var psr = bloodObj.GetComponent<ParticleSystemRenderer>();
 
         // Material & Sprite

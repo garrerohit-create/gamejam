@@ -19,7 +19,7 @@ public class BossHealthBarUI : MonoBehaviour
 
     private void Awake()
     {
-        if (instance != null && instance != null)
+        if (instance != null && instance != this)
         {
             Destroy(gameObject);
             return;
@@ -56,7 +56,7 @@ public class BossHealthBarUI : MonoBehaviour
         rootRect.anchorMax = new Vector2(0.5f, 1f);
         rootRect.pivot = new Vector2(0.5f, 1f);
         rootRect.anchoredPosition = new Vector2(0f, -25f);
-        rootRect.sizeDelta = new Vector2(500f, 65f);
+        rootRect.sizeDelta = new Vector2(520f, 68f);
 
         // Dark gothic background frame
         var bgObj = new GameObject("Boss_Bar_BG");
@@ -66,7 +66,7 @@ public class BossHealthBarUI : MonoBehaviour
         bgRect.anchorMax = Vector2.one;
         bgRect.sizeDelta = Vector2.zero;
         var bgImg = bgObj.AddComponent<Image>();
-        bgImg.color = new Color(0.08f, 0.05f, 0.08f, 0.90f);
+        bgImg.color = new Color(0.08f, 0.05f, 0.08f, 0.92f);
 
         // Border outline
         var outlineObj = new GameObject("Boss_Bar_Border");
@@ -109,15 +109,15 @@ public class BossHealthBarUI : MonoBehaviour
         var textObj = new GameObject("Boss_Name_Text");
         textObj.transform.SetParent(bossBarRoot.transform, false);
         var tRect = textObj.AddComponent<RectTransform>();
-        tRect.anchorMin = new Vector2(0f, 0.55f);
+        tRect.anchorMin = new Vector2(0f, 0.52f);
         tRect.anchorMax = new Vector2(1f, 1f);
         tRect.sizeDelta = Vector2.zero;
         nameText = textObj.AddComponent<Text>();
         nameText.font = Resources.GetBuiltinResource<Font>("LegacyRuntime.ttf");
-        nameText.fontSize = 18;
+        nameText.fontSize = 17;
         nameText.alignment = TextAnchor.MiddleCenter;
         nameText.color = new Color(0.95f, 0.85f, 0.65f, 1f);
-        nameText.text = "MALAKOR, THE ABYSSAL WARLORD";
+        nameText.text = "THE INFERNAL EXECUTIONER — WARDEN OF THE DAMNED";
         var tOutline = textObj.AddComponent<Outline>();
         tOutline.effectColor = Color.black;
         tOutline.effectDistance = new Vector2(1.5f, -1.5f);
@@ -131,10 +131,10 @@ public class BossHealthBarUI : MonoBehaviour
         hpNumRect.sizeDelta = Vector2.zero;
         hpText = hpNumObj.AddComponent<Text>();
         hpText.font = Resources.GetBuiltinResource<Font>("LegacyRuntime.ttf");
-        hpText.fontSize = 14;
+        hpText.fontSize = 13;
         hpText.alignment = TextAnchor.MiddleCenter;
         hpText.color = Color.white;
-        hpText.text = "20 / 20";
+        hpText.text = "60 / 60";
         var hpOut = hpNumObj.AddComponent<Outline>();
         hpOut.effectColor = Color.black;
         hpOut.effectDistance = new Vector2(1f, -1f);
@@ -186,7 +186,7 @@ public class BossHealthBarUI : MonoBehaviour
         targetFill = Mathf.Clamp01((float)cur / max);
         if (fillBar != null) fillBar.fillAmount = targetFill;
         if (hpText != null) hpText.text = string.Format("{0} / {1}", Mathf.Max(0, cur), max);
-        ghostDelayTimer = 0.5f;
+        ghostDelayTimer = 0.45f;
     }
 
     private void Update()
@@ -207,38 +207,54 @@ public class BossHealthBarUI : MonoBehaviour
         {
             if (nameText != null)
             {
-                nameText.text = "<color=#FF2222>MALAKOR, THE BLOODCRAZED WARLORD</color>";
+                nameText.text = "<color=#FF4444>PHASE 2: BLOOD AWAKENING</color>";
+                nameText.fontSize = 19;
+            }
+            if (fillBar != null)
+            {
+                fillBar.color = new Color(1f, 0.22f, 0.22f, 1f);
+            }
+            StartCoroutine(FlashPhaseChangeRoutine(5, new Color(1f, 0.22f, 0.22f, 1f)));
+        }
+        else if (phase == 3)
+        {
+            if (nameText != null)
+            {
+                nameText.text = "<color=#FF1111>FINAL JUDGMENT: WARDEN OF THE DAMNED</color>";
                 nameText.fontSize = 20;
             }
             if (fillBar != null)
             {
-                fillBar.color = new Color(1f, 0.15f, 0.15f, 1f);
+                fillBar.color = new Color(1f, 0.05f, 0.05f, 1f);
             }
-            StartCoroutine(FlashPhaseChangeRoutine());
+            StartCoroutine(FlashPhaseChangeRoutine(7, new Color(1f, 0.05f, 0.05f, 1f)));
         }
     }
 
-    private IEnumerator FlashPhaseChangeRoutine()
+    private IEnumerator FlashPhaseChangeRoutine(int flashes, Color targetColor)
     {
         if (fillBar == null) yield break;
-        Color normalCrimson = new Color(1f, 0.15f, 0.15f, 1f);
-        for (int i = 0; i < 5; i++)
+        for (int i = 0; i < flashes; i++)
         {
             fillBar.color = Color.white;
-            yield return new WaitForSeconds(0.08f);
-            fillBar.color = normalCrimson;
-            yield return new WaitForSeconds(0.08f);
+            yield return new WaitForSeconds(0.07f);
+            fillBar.color = targetColor;
+            yield return new WaitForSeconds(0.07f);
         }
     }
 
     private void HandleBossDefeated()
     {
+        if (nameText != null)
+        {
+            nameText.text = "<color=#888888>THE INFERNAL EXECUTIONER HAS FALLEN</color>";
+        }
         StartCoroutine(FadeOutBossBar());
     }
 
     private IEnumerator FadeOutBossBar()
     {
-        yield return new WaitForSeconds(3.0f);
+        yield return new WaitForSeconds(3.5f);
         if (bossBarRoot != null)
         {
             bossBarRoot.SetActive(false);

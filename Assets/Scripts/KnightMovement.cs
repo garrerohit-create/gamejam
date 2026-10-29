@@ -640,10 +640,10 @@ public class KnightMovement : MonoBehaviour
         return false;
     }
 
-    public bool TakeDamage(int damage, GameObject attacker = null)
+    public bool TakeDamage(int damage, GameObject attacker = null, bool canBeParried = true)
     {
-        // 1. Check parry
-        if (TryParry(damage, attacker))
+        // 1. Check parry (only if attack is parryable)
+        if (canBeParried && TryParry(damage, attacker))
             return false;
 
         // 2. Check i-frames from Dodge or Roll

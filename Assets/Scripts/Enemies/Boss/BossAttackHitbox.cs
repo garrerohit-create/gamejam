@@ -5,9 +5,12 @@ using UnityEngine;
 public class BossAttackHitbox : MonoBehaviour
 {
     [SerializeField] private int damage = 2;
+    [SerializeField] private bool isParryable = true;
     private Collider2D hitboxCollider;
     private readonly HashSet<Collider2D> alreadyDamaged = new HashSet<Collider2D>();
     private int facingDirection = -1;
+
+    public bool IsParryable => isParryable;
 
     private void Awake()
     {
@@ -22,9 +25,10 @@ public class BossAttackHitbox : MonoBehaviour
         transform.localPosition = new Vector3(Mathf.Abs(transform.localPosition.x) * facingDirection, transform.localPosition.y, 0f);
     }
 
-    public void EnableHitbox(int dmg)
+    public void EnableHitbox(int dmg, bool parryable = true)
     {
         damage = dmg;
+        isParryable = parryable;
         alreadyDamaged.Clear();
         if (hitboxCollider != null)
         {
@@ -52,8 +56,24 @@ public class BossAttackHitbox : MonoBehaviour
         if (km != null)
         {
             alreadyDamaged.Add(collision);
-            km.TakeDamage(damage, transform.root.gameObject);
+
+            // Counterplay check: Can this attack be parried?
+            if (isParryable && km.IsParrying)
+            {
+                bool parried = km.TryParry(damage, transform.root.gameObject);
+                if (parried)
+                {
+                    DisableHitbox();
+                    var boss = GetComponentInParent<BossAI>();
+                    if (boss != null)
+                    {
+                        boss.OnAttackParried();
+                    }
+                    return;
+                }
+            }
+
+            km.TakeDamage(damage, transform.root.gameObject, isParryable);
         }
     }
 }
-

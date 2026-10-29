@@ -114,6 +114,7 @@ public class PlayerHealth : MonoBehaviour
         healObj.transform.position = transform.position + new Vector3(0f, 1.2f, 0f);
 
         var ps = healObj.AddComponent<ParticleSystem>();
+        ps.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
         var psr = healObj.GetComponent<ParticleSystemRenderer>();
 
         var shader = Shader.Find("Sprites/Default");
