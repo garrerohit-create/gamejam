@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 60219347336438044}
   - component: {fileID: 2939979183398632742}
   - component: {fileID: 3960752741122321569}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: AbyssalBoss
   m_TagString: Untagged
   m_Icon: {fileID: 0}

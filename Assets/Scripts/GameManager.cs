@@ -8,7 +8,7 @@ public class GameManager : MonoBehaviour
     public static GameManager Instance => instance;
 
     [Header("Respawn & Spawn")]
-    [SerializeField] private Vector3 initialSpawnPos = new Vector3(-1.5f, 0.8f, 0f);
+    [SerializeField] private Vector3 initialSpawnPos = new Vector3(1.61f, 2.50f, 0f);
 
     private GameObject deathOverlayObj;
     private GameObject pauseOverlayObj;
@@ -17,6 +17,8 @@ public class GameManager : MonoBehaviour
 
     private PlayerHealth playerHealth;
     private KnightMovement knightMovement;
+
+    public Vector3 InitialSpawnPos => initialSpawnPos;
 
     private void Awake()
     {
@@ -29,6 +31,14 @@ public class GameManager : MonoBehaviour
 
         playerHealth = FindAnyObjectByType<PlayerHealth>();
         knightMovement = FindAnyObjectByType<KnightMovement>();
+
+        if (knightMovement != null)
+        {
+            initialSpawnPos = knightMovement.transform.position;
+        }
+
+        // Reset any leftover static checkpoint state on fresh start
+        FallChasmTrigger.ResetCheckpoint();
 
         if (playerHealth != null)
         {

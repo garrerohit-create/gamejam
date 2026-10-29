@@ -112,7 +112,7 @@ GameObject:
   - component: {fileID: 5460970165335630792}
   - component: {fileID: 1467964000497488790}
   - component: {fileID: -5849939705682597064}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: ArmoredGuard
   m_TagString: Untagged
   m_Icon: {fileID: 0}

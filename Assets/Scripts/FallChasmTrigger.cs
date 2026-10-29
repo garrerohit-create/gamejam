@@ -4,15 +4,29 @@ using UnityEngine;
 public class FallChasmTrigger : MonoBehaviour
 {
     [SerializeField] private int fallDamage = 1;
-    [SerializeField] private Vector3 defaultRespawnPoint = new Vector3(0f, 0f, 0f);
+    [SerializeField] private Vector3 defaultRespawnPoint = new Vector3(1.61f, 2.50f, 0f);
 
     private static Vector3 currentCheckpoint;
-    private static bool hasCheckpoint;
+    private static bool hasCheckpoint = false;
+
+    [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration)]
+    public static void ResetStaticData()
+    {
+        hasCheckpoint = false;
+        currentCheckpoint = Vector3.zero;
+    }
+
+    public static void ResetCheckpoint()
+    {
+        hasCheckpoint = false;
+        currentCheckpoint = Vector3.zero;
+    }
 
     public static void SetCheckpoint(Vector3 checkpointPos)
     {
         currentCheckpoint = checkpointPos;
         hasCheckpoint = true;
+        Debug.Log($"[Checkpoint] New checkpoint registered at: {checkpointPos}");
     }
 
     public static Vector3 GetCurrentCheckpoint(Vector3 fallback)
@@ -20,11 +34,14 @@ public class FallChasmTrigger : MonoBehaviour
         return hasCheckpoint ? currentCheckpoint : fallback;
     }
 
+    public static bool HasCheckpoint => hasCheckpoint;
+
     private void Awake()
     {
-        if (!hasCheckpoint)
+        var knight = FindAnyObjectByType<KnightMovement>();
+        if (knight != null)
         {
-            currentCheckpoint = defaultRespawnPoint;
+            defaultRespawnPoint = knight.transform.position;
         }
     }
 
@@ -44,7 +61,8 @@ public class FallChasmTrigger : MonoBehaviour
                 rb.linearVelocity = Vector2.zero;
             }
 
-            km.transform.position = hasCheckpoint ? currentCheckpoint : defaultRespawnPoint;
+            Vector3 targetPos = hasCheckpoint ? currentCheckpoint : defaultRespawnPoint;
+            km.transform.position = targetPos;
         }
     }
 }

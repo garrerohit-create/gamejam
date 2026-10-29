@@ -43,6 +43,12 @@ public static class MapBuilder
             Object.DestroyImmediate(b.gameObject);
         }
 
+        var oldCheckpoints = GameObject.FindObjectsByType<LevelCheckpointTrigger>();
+        foreach (var cp in oldCheckpoints)
+        {
+            Object.DestroyImmediate(cp.gameObject);
+        }
+
         // Ensure AudioManager & GameManager
         var audioMgr = GameObject.Find("[AudioManager]");
         if (audioMgr == null)
@@ -131,7 +137,7 @@ public static class MapBuilder
         CreatePlatform(platformsRoot, "Terrain_Plateau_Huge_0", new Vector2(3.5f, -2.8f), Vector2.zero, Vector2.zero, groundLayer, sortingOrder: 1, hasCollider: false);
 
         // Starter Main Stone Plateau (Solid cracked stone surface at exact Visual Top: -0.260, spans X: -4.20 to 11.20)
-        CreatePlatform(platformsRoot, "Platform_Large_Stone_0", new Vector2(3.5f, -1.51f), new Vector2(15.40f, 1.20f), new Vector2(0f, 0.650f), groundLayer, sortingOrder: 2, hasCollider: true);
+        CreatePlatform(platformsRoot, "Platform_Large_Stone_0", new Vector2(3.5f, -1.56f), new Vector2(15.40f, 1.20f), new Vector2(0f, 0.700f), groundLayer, sortingOrder: 2, hasCollider: true);
 
         // Left Anchor Stone (Seamlessly bridges left boundary from X: -7.3 to -4.0 at Visual Top: -0.260)
         CreatePlatform(platformsRoot, "Platform_Medium_Stone_1", new Vector2(-5.6f, -1.65f), new Vector2(3.60f, 1.20f), new Vector2(0f, 0.787f), groundLayer, sortingOrder: 2, hasCollider: true);
@@ -150,11 +156,11 @@ public static class MapBuilder
         CreateSpikeHazard(obstaclesRoot, "Spikes_Jagged_Ridge_31", new Vector2(20.5f, -6.0f), new Vector2(6.5f, 2.8f));
         CreateSpikeHazard(obstaclesRoot, "Spikes_Stone_22", new Vector2(25.0f, -5.8f), new Vector2(5.5f, 2.5f));
 
-        // Broken Viaduct Outcrop (Solid anchor ledge jutting over abyss, Visual Top: -0.013)
+        // Broken Viaduct Outcrop (Solid anchor ledge jutting over abyss, Visual Top: -0.038)
         CreatePlatform(platformsRoot, "Platform_Medium_Stone_1", new Vector2(14.5f, -1.4f), new Vector2(3.60f, 1.20f), new Vector2(0f, 0.762f), groundLayer);
 
-        // Floating Monolith 1: Wide Levitating Runic Slab with reactive hover (Visual Top: 0.612)
-        CreateFloatingPlatform(platformsRoot, "Stepping_Stone_19", new Vector2(17.8f, 0.0f), new Vector2(1.80f, 0.80f), new Vector2(0f, 0.212f), groundLayer, 0.08f, 1.2f, new Color(1.0f, 0.55f, 0.18f, 1.0f));
+        // Floating Monolith 1: Wide Levitating Runic Slab with reactive hover (Visual Top: 0.588)
+        CreateFloatingPlatform(platformsRoot, "Stepping_Stone_19", new Vector2(17.8f, 0.0f), new Vector2(1.80f, 0.80f), new Vector2(0f, 0.188f), groundLayer, 0.08f, 1.2f, new Color(1.0f, 0.55f, 0.18f, 1.0f));
 
         // Floating Monolith 2: Ancient Spire Stepping Stone with runic point light (Visual Top: 1.388)
         CreateFloatingPlatform(platformsRoot, "Stepping_Stone_12", new Vector2(20.7f, 0.6f), new Vector2(1.20f, 0.80f), new Vector2(0f, 0.388f), groundLayer, 0.07f, 0.95f, new Color(1.0f, 0.45f, 0.15f, 1.0f));
@@ -233,8 +239,8 @@ public static class MapBuilder
         CreatePlatform(platformsRoot, "Terrain_Plateau_Huge_4", new Vector2(65.0f, -2.4f), Vector2.zero, Vector2.zero, groundLayer, sortingOrder: 1, hasCollider: false);
 
         // Seamless Continuous Arena Floor (Visual Top: -0.080, spanning X: 59.00 to 86.00 continuous)
-        CreatePlatform(platformsRoot, "Platform_Large_Stone_0", new Vector2(65.0f, -1.33f), new Vector2(12.00f, 1.20f), new Vector2(0f, 0.650f), groundLayer, sortingOrder: 2, hasCollider: true);
-        CreatePlatform(platformsRoot, "Platform_Large_Stone_0", new Vector2(78.5f, -1.33f), new Vector2(15.00f, 1.20f), new Vector2(0f, 0.650f), groundLayer, sortingOrder: 2, hasCollider: true);
+        CreatePlatform(platformsRoot, "Platform_Large_Stone_0", new Vector2(65.0f, -1.38f), new Vector2(12.00f, 1.20f), new Vector2(0f, 0.700f), groundLayer, sortingOrder: 2, hasCollider: true);
+        CreatePlatform(platformsRoot, "Platform_Large_Stone_0", new Vector2(78.5f, -1.38f), new Vector2(15.00f, 1.20f), new Vector2(0f, 0.700f), groundLayer, sortingOrder: 2, hasCollider: true);
 
         // Arena Gothic Atmosphere & The Giant Skull Throne
         CreateDecoration(decorRoot, "Skull_Throne_Giant", new Vector2(74.5f, 3.2f), 1.35f, sortingOrder: -5);
@@ -273,7 +279,9 @@ public static class MapBuilder
         var chasmCol = chasmObj.AddComponent<BoxCollider2D>();
         chasmCol.size = new Vector2(110f, 3f);
         chasmCol.isTrigger = true;
-        chasmObj.AddComponent<FallChasmTrigger>();
+        var fallTrigger = chasmObj.AddComponent<FallChasmTrigger>();
+        var respawnField = typeof(FallChasmTrigger).GetField("defaultRespawnPoint", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
+        if (respawnField != null) respawnField.SetValue(fallTrigger, new Vector3(1.61f, 2.50f, 0f));
 
         // Wire Boss Health UI onto HUD Canvas
         var hudCanvas = GameObject.Find("Player_HUD_Canvas");
