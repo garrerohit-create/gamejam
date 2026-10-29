@@ -197,9 +197,6 @@ public static class MapBuilder
         CreatePlatform(platformsRoot, "Terrain_Plateau_Huge_4", new Vector2(65.0f, -2.4f), new Vector2(12.00f, 1.20f), new Vector2(0f, 1.725f), groundLayer);
         CreatePlatform(platformsRoot, "Platform_Large_Stone_0", new Vector2(78.5f, -1.43f), new Vector2(15.00f, 1.20f), new Vector2(0f, 0.750f), groundLayer);
 
-        // Elevated battlement inside the arena (Visual Top: 4.65, one-way platform)
-        CreatePlatform(platformsRoot, "Platform_Large_Stone_16", new Vector2(73.0f, 3.8f), new Vector2(8.95f, 1.20f), new Vector2(0f, 0.250f), groundLayer, isOneWay: true);
-
         // Arena Gothic Atmosphere & The Giant Skull Throne
         CreateDecoration(decorRoot, "Skull_Throne_Giant", new Vector2(74.5f, 3.2f), 1.35f, sortingOrder: -5);
         CreateDecoration(decorRoot, "Stone_Pillar_14", new Vector2(61.5f, 0.90f), 1.05f);
