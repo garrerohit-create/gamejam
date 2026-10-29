@@ -4,7 +4,7 @@ public class CameraFollow2D : MonoBehaviour
 {
     [Header("Target Tracking")]
     [SerializeField] private Transform target;
-    [SerializeField] private Vector3 offset = new Vector3(2f, 1.2f, -10f);
+    [SerializeField] private Vector3 offset = new Vector3(2f, 0.4f, -10f);
 
     [Header("Smoothing")]
     [SerializeField] private float smoothTimeX = 0.22f;

@@ -62,6 +62,8 @@ public static class MapBuilder
         var cam = Camera.main;
         if (cam != null)
         {
+            cam.orthographicSize = 6.2f;
+
             var follow = cam.GetComponent<CameraFollow2D>();
             if (follow == null) follow = cam.gameObject.AddComponent<CameraFollow2D>();
 
@@ -183,11 +185,11 @@ public static class MapBuilder
 
         // Stepping stone platforms descending towards arena
         // Step D: High descent platform (Visual Top: 3.55, spans X: 45.38 to 49.63)
-        CreatePlatform(platformsRoot, "Platform_Medium_Stone_4", new Vector2(47.5f, 2.4f), new Vector2(4.25f, 1.20f), new Vector2(0f, 0.550f), groundLayer);
-        // Step E: Mid descent stepping stone (Visual Top: 1.96, spans X: 51.10 to 53.30)
-        CreatePlatform(platformsRoot, "Platform_Small_Stone_8", new Vector2(52.2f, 1.2f), new Vector2(2.20f, 1.00f), new Vector2(0f, 0.262f), groundLayer);
-        // Step F: Low landing platform before arena (Visual Top: 1.09, spans X: 53.95 to 58.45)
-        CreatePlatform(platformsRoot, "Platform_Rock_Medium_2", new Vector2(56.2f, -0.4f), new Vector2(4.50f, 1.20f), new Vector2(0f, 0.888f), groundLayer);
+        CreatePlatform(platformsRoot, "Platform_Medium_Stone_4", new Vector2(47.5f, 2.7f), new Vector2(4.25f, 1.20f), new Vector2(0f, 0.550f), groundLayer);
+        // Step E: Mid descent stepping stone (Visual Top: 2.16, spans X: 51.10 to 53.30)
+        CreatePlatform(platformsRoot, "Platform_Small_Stone_8", new Vector2(52.2f, 1.4f), new Vector2(2.20f, 1.00f), new Vector2(0f, 0.262f), groundLayer);
+        // Step F: Low landing platform before arena (Visual Top: 1.49, spans X: 53.95 to 58.45)
+        CreatePlatform(platformsRoot, "Platform_Rock_Medium_2", new Vector2(56.2f, 0.0f), new Vector2(4.50f, 1.20f), new Vector2(0f, 0.888f), groundLayer);
 
         // Checkpoint 2
         CreateCheckpoint(platformsRoot, new Vector3(56.2f, 1.5f, 0f));
@@ -215,7 +217,7 @@ public static class MapBuilder
         barrierCol.size = new Vector2(0.8f, 10f);
         barrierCol.isTrigger = false;
         var barrierSR = barrierObj.AddComponent<SpriteRenderer>();
-        barrierSR.sprite = AssetDatabase.LoadAssetAtPath<Sprite>("Assets/Art/Environment/Stone_Pillar_14.png");
+        barrierSR.sprite = AssetDatabase.LoadAssetAtPath<Sprite>(SPRITE_PATH + "Decorations/Stone_Pillar_14.png");
         barrierSR.color = new Color(0.9f, 0.1f, 0.1f, 0.85f);
         barrierSR.sortingOrder = 5;
         barrierObj.AddComponent<ArenaEntranceBarrier>();
@@ -257,7 +259,8 @@ public static class MapBuilder
         var sr = obj.AddComponent<SpriteRenderer>();
         var sprite = AssetDatabase.LoadAssetAtPath<Sprite>(SPRITE_PATH + "Platforms/" + spriteName + ".png");
         if (sprite != null) sr.sprite = sprite;
-        sr.sortingOrder = 0;
+        sr.sortingOrder = 2; // Always in front of background (-100), decorations (-2), and spikes (1)
+        sr.color = new Color(1.18f, 1.15f, 1.15f, 1.0f); // Enhanced visibility & stone contrast
 
         var col = obj.AddComponent<BoxCollider2D>();
         col.size = colSize;
@@ -285,7 +288,8 @@ public static class MapBuilder
         var sr = obj.AddComponent<SpriteRenderer>();
         var sprite = AssetDatabase.LoadAssetAtPath<Sprite>(SPRITE_PATH + "Platforms/Stone_Stairs_12.png");
         if (sprite != null) sr.sprite = sprite;
-        sr.sortingOrder = 0;
+        sr.sortingOrder = 2;
+        sr.color = new Color(1.18f, 1.15f, 1.15f, 1.0f);
 
         var col = obj.AddComponent<PolygonCollider2D>();
         col.points = new Vector2[] {
@@ -308,7 +312,7 @@ public static class MapBuilder
         var sr = obj.AddComponent<SpriteRenderer>();
         var sprite = AssetDatabase.LoadAssetAtPath<Sprite>(SPRITE_PATH + "Obstacles/" + spriteName + ".png");
         if (sprite != null) sr.sprite = sprite;
-        sr.sortingOrder = 5;
+        sr.sortingOrder = 1; // Renders behind platforms (2), above background (-100)
 
         var col = obj.AddComponent<BoxCollider2D>();
         col.size = colSize;
@@ -327,6 +331,8 @@ public static class MapBuilder
 
         var sr = obj.AddComponent<SpriteRenderer>();
         var sprite = AssetDatabase.LoadAssetAtPath<Sprite>(SPRITE_PATH + "Decorations/" + spriteName + ".png");
+        if (sprite == null)
+            sprite = AssetDatabase.LoadAssetAtPath<Sprite>(SPRITE_PATH + "Platforms/" + spriteName + ".png");
         if (sprite != null) sr.sprite = sprite;
         sr.sortingOrder = sortingOrder;
 
@@ -338,6 +344,12 @@ public static class MapBuilder
         var obj = new GameObject("Checkpoint");
         obj.transform.SetParent(parent.transform);
         obj.transform.position = pos;
+
+        var sr = obj.AddComponent<SpriteRenderer>();
+        var sprite = AssetDatabase.LoadAssetAtPath<Sprite>(SPRITE_PATH + "Decorations/Gravestone_Cross_17.png");
+        if (sprite != null) sr.sprite = sprite;
+        sr.sortingOrder = 2;
+        sr.color = new Color(0.4f, 1.0f, 0.7f, 0.95f); // Visible luminous emerald runic cross marker
 
         var col = obj.AddComponent<BoxCollider2D>();
         col.size = new Vector2(3f, 4f);
