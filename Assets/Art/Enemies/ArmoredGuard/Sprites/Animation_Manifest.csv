@@ -1,0 +1,73 @@
+﻿animation_set,frame_file,source_atlas,source_row_1_based,source_column_1_based,frame_dimensions_px,format,notes
+Idle,01_Movement/Idle/Idle_01.png,Movement_Atlas.png,1,1,256x256,RGBA PNG,Row 1: idle stance loop
+Idle,01_Movement/Idle/Idle_02.png,Movement_Atlas.png,1,2,256x256,RGBA PNG,Row 1: idle stance loop
+Idle,01_Movement/Idle/Idle_03.png,Movement_Atlas.png,1,3,256x256,RGBA PNG,Row 1: idle stance loop
+Idle,01_Movement/Idle/Idle_04.png,Movement_Atlas.png,1,4,256x256,RGBA PNG,Row 1: idle stance loop
+Idle,01_Movement/Idle/Idle_05.png,Movement_Atlas.png,1,5,256x256,RGBA PNG,Row 1: idle stance loop
+Idle,01_Movement/Idle/Idle_06.png,Movement_Atlas.png,1,6,256x256,RGBA PNG,Row 1: idle stance loop
+Walk,01_Movement/Walk/Walk_01.png,Movement_Atlas.png,2,1,256x256,RGBA PNG,Row 2: walking cycle
+Walk,01_Movement/Walk/Walk_02.png,Movement_Atlas.png,2,2,256x256,RGBA PNG,Row 2: walking cycle
+Walk,01_Movement/Walk/Walk_03.png,Movement_Atlas.png,2,3,256x256,RGBA PNG,Row 2: walking cycle
+Walk,01_Movement/Walk/Walk_04.png,Movement_Atlas.png,2,4,256x256,RGBA PNG,Row 2: walking cycle
+Walk,01_Movement/Walk/Walk_05.png,Movement_Atlas.png,2,5,256x256,RGBA PNG,Row 2: walking cycle
+Walk,01_Movement/Walk/Walk_06.png,Movement_Atlas.png,2,6,256x256,RGBA PNG,Row 2: walking cycle
+Run,01_Movement/Run/Run_01.png,Movement_Atlas.png,3,1,256x256,RGBA PNG,Row 3: running cycle
+Run,01_Movement/Run/Run_02.png,Movement_Atlas.png,3,2,256x256,RGBA PNG,Row 3: running cycle
+Run,01_Movement/Run/Run_03.png,Movement_Atlas.png,3,3,256x256,RGBA PNG,Row 3: running cycle
+Run,01_Movement/Run/Run_04.png,Movement_Atlas.png,3,4,256x256,RGBA PNG,Row 3: running cycle
+Run,01_Movement/Run/Run_05.png,Movement_Atlas.png,3,5,256x256,RGBA PNG,Row 3: running cycle
+Run,01_Movement/Run/Run_06.png,Movement_Atlas.png,3,6,256x256,RGBA PNG,Row 3: running cycle
+Jump_Land_Sequence,01_Movement/Jump_Land_Sequence/Jump_Land_01.png,Movement_Atlas.png,4,1,256x256,RGBA PNG,Row 4: generated jump-to-landing sequence; review timing in-engine
+Jump_Land_Sequence,01_Movement/Jump_Land_Sequence/Jump_Land_02.png,Movement_Atlas.png,4,2,256x256,RGBA PNG,Row 4: generated jump-to-landing sequence; review timing in-engine
+Jump_Land_Sequence,01_Movement/Jump_Land_Sequence/Jump_Land_03.png,Movement_Atlas.png,4,3,256x256,RGBA PNG,Row 4: generated jump-to-landing sequence; review timing in-engine
+Jump_Land_Sequence,01_Movement/Jump_Land_Sequence/Jump_Land_04.png,Movement_Atlas.png,4,4,256x256,RGBA PNG,Row 4: generated jump-to-landing sequence; review timing in-engine
+Jump_Land_Sequence,01_Movement/Jump_Land_Sequence/Jump_Land_05.png,Movement_Atlas.png,4,5,256x256,RGBA PNG,Row 4: generated jump-to-landing sequence; review timing in-engine
+Jump_Land_Sequence,01_Movement/Jump_Land_Sequence/Jump_Land_06.png,Movement_Atlas.png,4,6,256x256,RGBA PNG,Row 4: generated jump-to-landing sequence; review timing in-engine
+Light_Attack_1,02_Combat/Light_Attack_1/Light_Attack_1_01.png,Combat_Atlas.png,1,1,256x256,RGBA PNG,Row 1: forward strike sequence
+Light_Attack_1,02_Combat/Light_Attack_1/Light_Attack_1_02.png,Combat_Atlas.png,1,2,256x256,RGBA PNG,Row 1: forward strike sequence
+Light_Attack_1,02_Combat/Light_Attack_1/Light_Attack_1_03.png,Combat_Atlas.png,1,3,256x256,RGBA PNG,Row 1: forward strike sequence
+Light_Attack_1,02_Combat/Light_Attack_1/Light_Attack_1_04.png,Combat_Atlas.png,1,4,256x256,RGBA PNG,Row 1: forward strike sequence
+Light_Attack_1,02_Combat/Light_Attack_1/Light_Attack_1_05.png,Combat_Atlas.png,1,5,256x256,RGBA PNG,Row 1: forward strike sequence
+Light_Attack_1,02_Combat/Light_Attack_1/Light_Attack_1_06.png,Combat_Atlas.png,1,6,256x256,RGBA PNG,Row 1: forward strike sequence
+Light_Attack_2,02_Combat/Light_Attack_2/Light_Attack_2_01.png,Combat_Atlas.png,2,1,256x256,RGBA PNG,Row 2: alternate strike/combo sequence
+Light_Attack_2,02_Combat/Light_Attack_2/Light_Attack_2_02.png,Combat_Atlas.png,2,2,256x256,RGBA PNG,Row 2: alternate strike/combo sequence
+Light_Attack_2,02_Combat/Light_Attack_2/Light_Attack_2_03.png,Combat_Atlas.png,2,3,256x256,RGBA PNG,Row 2: alternate strike/combo sequence
+Light_Attack_2,02_Combat/Light_Attack_2/Light_Attack_2_04.png,Combat_Atlas.png,2,4,256x256,RGBA PNG,Row 2: alternate strike/combo sequence
+Light_Attack_2,02_Combat/Light_Attack_2/Light_Attack_2_05.png,Combat_Atlas.png,2,5,256x256,RGBA PNG,Row 2: alternate strike/combo sequence
+Light_Attack_2,02_Combat/Light_Attack_2/Light_Attack_2_06.png,Combat_Atlas.png,2,6,256x256,RGBA PNG,Row 2: alternate strike/combo sequence
+Heavy_Slam,02_Combat/Heavy_Slam/Heavy_Slam_01.png,Combat_Atlas.png,3,1,256x256,RGBA PNG,Row 3: overhead heavy slam sequence
+Heavy_Slam,02_Combat/Heavy_Slam/Heavy_Slam_02.png,Combat_Atlas.png,3,2,256x256,RGBA PNG,Row 3: overhead heavy slam sequence
+Heavy_Slam,02_Combat/Heavy_Slam/Heavy_Slam_03.png,Combat_Atlas.png,3,3,256x256,RGBA PNG,Row 3: overhead heavy slam sequence
+Heavy_Slam,02_Combat/Heavy_Slam/Heavy_Slam_04.png,Combat_Atlas.png,3,4,256x256,RGBA PNG,Row 3: overhead heavy slam sequence
+Heavy_Slam,02_Combat/Heavy_Slam/Heavy_Slam_05.png,Combat_Atlas.png,3,5,256x256,RGBA PNG,Row 3: overhead heavy slam sequence
+Heavy_Slam,02_Combat/Heavy_Slam/Heavy_Slam_06.png,Combat_Atlas.png,3,6,256x256,RGBA PNG,Row 3: overhead heavy slam sequence
+Charge_Attack,02_Combat/Charge_Attack/Charge_Attack_01.png,Combat_Atlas.png,4,1,256x256,RGBA PNG,Row 4: low forward charge sequence
+Charge_Attack,02_Combat/Charge_Attack/Charge_Attack_02.png,Combat_Atlas.png,4,2,256x256,RGBA PNG,Row 4: low forward charge sequence
+Charge_Attack,02_Combat/Charge_Attack/Charge_Attack_03.png,Combat_Atlas.png,4,3,256x256,RGBA PNG,Row 4: low forward charge sequence
+Charge_Attack,02_Combat/Charge_Attack/Charge_Attack_04.png,Combat_Atlas.png,4,4,256x256,RGBA PNG,Row 4: low forward charge sequence
+Charge_Attack,02_Combat/Charge_Attack/Charge_Attack_05.png,Combat_Atlas.png,4,5,256x256,RGBA PNG,Row 4: low forward charge sequence
+Charge_Attack,02_Combat/Charge_Attack/Charge_Attack_06.png,Combat_Atlas.png,4,6,256x256,RGBA PNG,Row 4: low forward charge sequence
+Guard_Ready_Transition,03_Defense_Damage_Death/Guard_Ready_Transition/Guard_Ready_Transition_01.png,Defense_Damage_Death_Atlas.png,1,1,256x256,RGBA PNG,Row 1: guard/ready stance transitioning into a strike
+Guard_Ready_Transition,03_Defense_Damage_Death/Guard_Ready_Transition/Guard_Ready_Transition_02.png,Defense_Damage_Death_Atlas.png,1,2,256x256,RGBA PNG,Row 1: guard/ready stance transitioning into a strike
+Guard_Ready_Transition,03_Defense_Damage_Death/Guard_Ready_Transition/Guard_Ready_Transition_03.png,Defense_Damage_Death_Atlas.png,1,3,256x256,RGBA PNG,Row 1: guard/ready stance transitioning into a strike
+Guard_Ready_Transition,03_Defense_Damage_Death/Guard_Ready_Transition/Guard_Ready_Transition_04.png,Defense_Damage_Death_Atlas.png,1,4,256x256,RGBA PNG,Row 1: guard/ready stance transitioning into a strike
+Guard_Ready_Transition,03_Defense_Damage_Death/Guard_Ready_Transition/Guard_Ready_Transition_05.png,Defense_Damage_Death_Atlas.png,1,5,256x256,RGBA PNG,Row 1: guard/ready stance transitioning into a strike
+Guard_Ready_Transition,03_Defense_Damage_Death/Guard_Ready_Transition/Guard_Ready_Transition_06.png,Defense_Damage_Death_Atlas.png,1,6,256x256,RGBA PNG,Row 1: guard/ready stance transitioning into a strike
+Block_Parry_Counter,03_Defense_Damage_Death/Block_Parry_Counter/Block_Parry_Counter_01.png,Defense_Damage_Death_Atlas.png,2,1,256x256,RGBA PNG,Row 2: guard poses followed by a parry/counter-style sequence
+Block_Parry_Counter,03_Defense_Damage_Death/Block_Parry_Counter/Block_Parry_Counter_02.png,Defense_Damage_Death_Atlas.png,2,2,256x256,RGBA PNG,Row 2: guard poses followed by a parry/counter-style sequence
+Block_Parry_Counter,03_Defense_Damage_Death/Block_Parry_Counter/Block_Parry_Counter_03.png,Defense_Damage_Death_Atlas.png,2,3,256x256,RGBA PNG,Row 2: guard poses followed by a parry/counter-style sequence
+Block_Parry_Counter,03_Defense_Damage_Death/Block_Parry_Counter/Block_Parry_Counter_04.png,Defense_Damage_Death_Atlas.png,2,4,256x256,RGBA PNG,Row 2: guard poses followed by a parry/counter-style sequence
+Block_Parry_Counter,03_Defense_Damage_Death/Block_Parry_Counter/Block_Parry_Counter_05.png,Defense_Damage_Death_Atlas.png,2,5,256x256,RGBA PNG,Row 2: guard poses followed by a parry/counter-style sequence
+Block_Parry_Counter,03_Defense_Damage_Death/Block_Parry_Counter/Block_Parry_Counter_06.png,Defense_Damage_Death_Atlas.png,2,6,256x256,RGBA PNG,Row 2: guard poses followed by a parry/counter-style sequence
+Hit_Reaction_Recovery,03_Defense_Damage_Death/Hit_Reaction_Recovery/Hit_Reaction_Recovery_01.png,Defense_Damage_Death_Atlas.png,3,1,256x256,RGBA PNG,Row 3: recoil/hit reaction progressing toward a kneel
+Hit_Reaction_Recovery,03_Defense_Damage_Death/Hit_Reaction_Recovery/Hit_Reaction_Recovery_02.png,Defense_Damage_Death_Atlas.png,3,2,256x256,RGBA PNG,Row 3: recoil/hit reaction progressing toward a kneel
+Hit_Reaction_Recovery,03_Defense_Damage_Death/Hit_Reaction_Recovery/Hit_Reaction_Recovery_03.png,Defense_Damage_Death_Atlas.png,3,3,256x256,RGBA PNG,Row 3: recoil/hit reaction progressing toward a kneel
+Hit_Reaction_Recovery,03_Defense_Damage_Death/Hit_Reaction_Recovery/Hit_Reaction_Recovery_04.png,Defense_Damage_Death_Atlas.png,3,4,256x256,RGBA PNG,Row 3: recoil/hit reaction progressing toward a kneel
+Hit_Reaction_Recovery,03_Defense_Damage_Death/Hit_Reaction_Recovery/Hit_Reaction_Recovery_05.png,Defense_Damage_Death_Atlas.png,3,5,256x256,RGBA PNG,Row 3: recoil/hit reaction progressing toward a kneel
+Hit_Reaction_Recovery,03_Defense_Damage_Death/Hit_Reaction_Recovery/Hit_Reaction_Recovery_06.png,Defense_Damage_Death_Atlas.png,3,6,256x256,RGBA PNG,Row 3: recoil/hit reaction progressing toward a kneel
+Death_Fall,03_Defense_Damage_Death/Death_Fall/Death_Fall_01.png,Defense_Damage_Death_Atlas.png,4,1,256x256,RGBA PNG,Row 4: fall-to-ground/death-style sequence
+Death_Fall,03_Defense_Damage_Death/Death_Fall/Death_Fall_02.png,Defense_Damage_Death_Atlas.png,4,2,256x256,RGBA PNG,Row 4: fall-to-ground/death-style sequence
+Death_Fall,03_Defense_Damage_Death/Death_Fall/Death_Fall_03.png,Defense_Damage_Death_Atlas.png,4,3,256x256,RGBA PNG,Row 4: fall-to-ground/death-style sequence
+Death_Fall,03_Defense_Damage_Death/Death_Fall/Death_Fall_04.png,Defense_Damage_Death_Atlas.png,4,4,256x256,RGBA PNG,Row 4: fall-to-ground/death-style sequence
+Death_Fall,03_Defense_Damage_Death/Death_Fall/Death_Fall_05.png,Defense_Damage_Death_Atlas.png,4,5,256x256,RGBA PNG,Row 4: fall-to-ground/death-style sequence
+Death_Fall,03_Defense_Damage_Death/Death_Fall/Death_Fall_06.png,Defense_Damage_Death_Atlas.png,4,6,256x256,RGBA PNG,Row 4: fall-to-ground/death-style sequence

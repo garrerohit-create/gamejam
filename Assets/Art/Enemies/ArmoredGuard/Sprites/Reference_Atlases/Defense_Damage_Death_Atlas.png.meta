@@ -1,0 +1,808 @@
+fileFormatVersion: 2
+guid: 8545e2b139b40dd468d4a9c1e3107581
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 5329901946769976827
+    second: Defense_Damage_Death_Atlas_0
+  - first:
+      213: 6167432360175793425
+    second: Defense_Damage_Death_Atlas_1
+  - first:
+      213: -6170349972549461830
+    second: Defense_Damage_Death_Atlas_2
+  - first:
+      213: 945546042087781055
+    second: Defense_Damage_Death_Atlas_3
+  - first:
+      213: -9059576968472049355
+    second: Defense_Damage_Death_Atlas_4
+  - first:
+      213: -3315879977854930135
+    second: Defense_Damage_Death_Atlas_5
+  - first:
+      213: 3477760537578299922
+    second: Defense_Damage_Death_Atlas_6
+  - first:
+      213: 2854236944503343841
+    second: Defense_Damage_Death_Atlas_7
+  - first:
+      213: -814206758632024098
+    second: Defense_Damage_Death_Atlas_8
+  - first:
+      213: -6657697852372738727
+    second: Defense_Damage_Death_Atlas_9
+  - first:
+      213: -7258080298478446900
+    second: Defense_Damage_Death_Atlas_10
+  - first:
+      213: -5473658317324818757
+    second: Defense_Damage_Death_Atlas_11
+  - first:
+      213: 8166943227431736683
+    second: Defense_Damage_Death_Atlas_12
+  - first:
+      213: -5780509406050198036
+    second: Defense_Damage_Death_Atlas_13
+  - first:
+      213: 1213157703565762808
+    second: Defense_Damage_Death_Atlas_14
+  - first:
+      213: -7992407573480764304
+    second: Defense_Damage_Death_Atlas_15
+  - first:
+      213: -6974818122737074351
+    second: Defense_Damage_Death_Atlas_16
+  - first:
+      213: -2860490013735385481
+    second: Defense_Damage_Death_Atlas_17
+  - first:
+      213: 8562694355237782243
+    second: Defense_Damage_Death_Atlas_18
+  - first:
+      213: -3244159048470786647
+    second: Defense_Damage_Death_Atlas_19
+  - first:
+      213: -3272692895340099593
+    second: Defense_Damage_Death_Atlas_20
+  - first:
+      213: -3960513333168162572
+    second: Defense_Damage_Death_Atlas_21
+  - first:
+      213: 7373226061362808818
+    second: Defense_Damage_Death_Atlas_22
+  - first:
+      213: -2464964242183579949
+    second: Defense_Damage_Death_Atlas_23
+  - first:
+      213: 6445490448968040229
+    second: Defense_Damage_Death_Atlas_24
+  - first:
+      213: -8948108220331563979
+    second: Defense_Damage_Death_Atlas_25
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationMethod: 0
+  spriteTessellationDetail: -1
+  spriteGeometrySubdivision: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: Defense_Damage_Death_Atlas_0
+      rect:
+        serializedVersion: 2
+        x: 45
+        y: 731
+        width: 181
+        height: 286
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bfd23e0e49d97f940800000000000000
+      internalID: 5329901946769976827
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Defense_Damage_Death_Atlas_1
+      rect:
+        serializedVersion: 2
+        x: 258
+        y: 733
+        width: 229
+        height: 278
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 115f68c1e0f179550800000000000000
+      internalID: 6167432360175793425
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Defense_Damage_Death_Atlas_2
+      rect:
+        serializedVersion: 2
+        x: 486
+        y: 727
+        width: 275
+        height: 279
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ab8195254638e5aa0800000000000000
+      internalID: -6170349972549461830
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Defense_Damage_Death_Atlas_3
+      rect:
+        serializedVersion: 2
+        x: 758
+        y: 731
+        width: 259
+        height: 280
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fb23b659d114f1d00800000000000000
+      internalID: 945546042087781055
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Defense_Damage_Death_Atlas_4
+      rect:
+        serializedVersion: 2
+        x: 1016
+        y: 731
+        width: 234
+        height: 269
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 539c9e23fbae54280800000000000000
+      internalID: -9059576968472049355
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Defense_Damage_Death_Atlas_5
+      rect:
+        serializedVersion: 2
+        x: 1240
+        y: 423
+        width: 296
+        height: 556
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 923702a7ab0abf1d0800000000000000
+      internalID: -3315879977854930135
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Defense_Damage_Death_Atlas_6
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 439
+        width: 237
+        height: 291
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 212e93078cc734030800000000000000
+      internalID: 3477760537578299922
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Defense_Damage_Death_Atlas_7
+      rect:
+        serializedVersion: 2
+        x: 246
+        y: 157
+        width: 267
+        height: 564
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1ea0bede0694c9720800000000000000
+      internalID: 2854236944503343841
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Defense_Damage_Death_Atlas_8
+      rect:
+        serializedVersion: 2
+        x: 498
+        y: 679
+        width: 15
+        height: 25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ed71402544b53b4f0800000000000000
+      internalID: -814206758632024098
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Defense_Damage_Death_Atlas_9
+      rect:
+        serializedVersion: 2
+        x: 508
+        y: 443
+        width: 215
+        height: 284
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 95d1177c31b1b93a0800000000000000
+      internalID: -6657697852372738727
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Defense_Damage_Death_Atlas_10
+      rect:
+        serializedVersion: 2
+        x: 726
+        y: 377
+        width: 265
+        height: 337
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: cc65ee96c6e164b90800000000000000
+      internalID: -7258080298478446900
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Defense_Damage_Death_Atlas_11
+      rect:
+        serializedVersion: 2
+        x: 1006
+        y: 397
+        width: 253
+        height: 319
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bb6edf5d2c8a904b0800000000000000
+      internalID: -5473658317324818757
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Defense_Damage_Death_Atlas_12
+      rect:
+        serializedVersion: 2
+        x: 28
+        y: 183
+        width: 219
+        height: 253
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b65d9d3589fc65170800000000000000
+      internalID: 8166943227431736683
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Defense_Damage_Death_Atlas_13
+      rect:
+        serializedVersion: 2
+        x: 518
+        y: 181
+        width: 223
+        height: 249
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: cedd297525187cfa0800000000000000
+      internalID: -5780509406050198036
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Defense_Damage_Death_Atlas_14
+      rect:
+        serializedVersion: 2
+        x: 1334
+        y: 414
+        width: 16
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8f0e099f08006d010800000000000000
+      internalID: 1213157703565762808
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Defense_Damage_Death_Atlas_15
+      rect:
+        serializedVersion: 2
+        x: 260
+        y: 369
+        width: 13
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 07c898258a3451190800000000000000
+      internalID: -7992407573480764304
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Defense_Damage_Death_Atlas_16
+      rect:
+        serializedVersion: 2
+        x: 1020
+        y: 165
+        width: 245
+        height: 221
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 15fbc4d1fd7743f90800000000000000
+      internalID: -6974818122737074351
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Defense_Damage_Death_Atlas_17
+      rect:
+        serializedVersion: 2
+        x: 1286
+        y: 177
+        width: 219
+        height: 220
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 77600cfec7f7d48d0800000000000000
+      internalID: -2860490013735385481
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Defense_Damage_Death_Atlas_18
+      rect:
+        serializedVersion: 2
+        x: 278
+        y: 181
+        width: 11
+        height: 27
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3e2c034262dc4d670800000000000000
+      internalID: 8562694355237782243
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Defense_Damage_Death_Atlas_19
+      rect:
+        serializedVersion: 2
+        x: 744
+        y: 195
+        width: 7
+        height: 19
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9ad8701a88e6af2d0800000000000000
+      internalID: -3244159048470786647
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Defense_Damage_Death_Atlas_20
+      rect:
+        serializedVersion: 2
+        x: 750
+        y: 165
+        width: 243
+        height: 195
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7f70f42b62f0592d0800000000000000
+      internalID: -3272692895340099593
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Defense_Damage_Death_Atlas_21
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 245
+        height: 180
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4f830507b1e6909c0800000000000000
+      internalID: -3960513333168162572
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Defense_Damage_Death_Atlas_22
+      rect:
+        serializedVersion: 2
+        x: 244
+        y: 13
+        width: 223
+        height: 168
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2f7ce2ca906f25660800000000000000
+      internalID: 7373226061362808818
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Defense_Damage_Death_Atlas_23
+      rect:
+        serializedVersion: 2
+        x: 286
+        y: 165
+        width: 9
+        height: 19
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3d69b98e410bacdd0800000000000000
+      internalID: -2464964242183579949
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Defense_Damage_Death_Atlas_24
+      rect:
+        serializedVersion: 2
+        x: 480
+        y: 0
+        width: 1050
+        height: 166
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 52fb9e5e96bf27950800000000000000
+      internalID: 6445490448968040229
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Defense_Damage_Death_Atlas_25
+      rect:
+        serializedVersion: 2
+        x: 230
+        y: 19
+        width: 11
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 53462639bfee1d380800000000000000
+      internalID: -8948108220331563979
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      Defense_Damage_Death_Atlas_0: 5329901946769976827
+      Defense_Damage_Death_Atlas_1: 6167432360175793425
+      Defense_Damage_Death_Atlas_10: -7258080298478446900
+      Defense_Damage_Death_Atlas_11: -5473658317324818757
+      Defense_Damage_Death_Atlas_12: 8166943227431736683
+      Defense_Damage_Death_Atlas_13: -5780509406050198036
+      Defense_Damage_Death_Atlas_14: 1213157703565762808
+      Defense_Damage_Death_Atlas_15: -7992407573480764304
+      Defense_Damage_Death_Atlas_16: -6974818122737074351
+      Defense_Damage_Death_Atlas_17: -2860490013735385481
+      Defense_Damage_Death_Atlas_18: 8562694355237782243
+      Defense_Damage_Death_Atlas_19: -3244159048470786647
+      Defense_Damage_Death_Atlas_2: -6170349972549461830
+      Defense_Damage_Death_Atlas_20: -3272692895340099593
+      Defense_Damage_Death_Atlas_21: -3960513333168162572
+      Defense_Damage_Death_Atlas_22: 7373226061362808818
+      Defense_Damage_Death_Atlas_23: -2464964242183579949
+      Defense_Damage_Death_Atlas_24: 6445490448968040229
+      Defense_Damage_Death_Atlas_25: -8948108220331563979
+      Defense_Damage_Death_Atlas_3: 945546042087781055
+      Defense_Damage_Death_Atlas_4: -9059576968472049355
+      Defense_Damage_Death_Atlas_5: -3315879977854930135
+      Defense_Damage_Death_Atlas_6: 3477760537578299922
+      Defense_Damage_Death_Atlas_7: 2854236944503343841
+      Defense_Damage_Death_Atlas_8: -814206758632024098
+      Defense_Damage_Death_Atlas_9: -6657697852372738727
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
