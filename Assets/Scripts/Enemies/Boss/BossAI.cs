@@ -1002,6 +1002,7 @@ public class BossAI : MonoBehaviour
         }
 
         AudioManager.Play(SoundID.ParryClash, 1.25f);
+        AudioManager.Play(SoundID.SwordClang, 1.05f);
         CameraShake.Shake(0.35f, 0.25f);
 
         // Flash boss yellow/white to signal deflection & stagger
@@ -1032,6 +1033,7 @@ public class BossAI : MonoBehaviour
         bleed.TriggerBleed(transform.position + new Vector3(0f, 2.0f, 0f), bloodDir, dmg >= 2);
 
         AudioManager.Play(SoundID.BossHurt, 0.95f);
+        AudioManager.Play(SoundID.ArmorClang, 1.0f);
 
         currentPoise -= dmg;
         poiseRegenTimer = 3.5f;

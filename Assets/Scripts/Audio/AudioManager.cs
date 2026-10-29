@@ -15,6 +15,8 @@ public enum SoundID
     FleshHitHeavy,
     BloodSplatter,
     GauntletStrike,
+    ArmorClang,
+    SwordClang,
 
     // Player Movement & Health
     DodgeWhoosh,
@@ -87,6 +89,8 @@ public class AudioManager : MonoBehaviour
         { SoundID.FleshHitHeavy, "Assets/Audio/Combat/Flesh_Hit_Heavy.wav" },
         { SoundID.BloodSplatter, "Assets/Audio/Combat/Blood_Splatter.wav" },
         { SoundID.GauntletStrike, "Assets/Audio/Combat/Gauntlet_Strike.wav" },
+        { SoundID.ArmorClang, "Assets/Audio/Combat/Armor_Clang.wav" },
+        { SoundID.SwordClang, "Assets/Audio/Combat/Sword_Clang.wav" },
 
         { SoundID.DodgeWhoosh, "Assets/Audio/Movement/Dodge_Whoosh.wav" },
         { SoundID.RollSlide, "Assets/Audio/Movement/Roll_Slide.wav" },

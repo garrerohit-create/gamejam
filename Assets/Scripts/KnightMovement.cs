@@ -172,11 +172,13 @@ public class KnightMovement : MonoBehaviour
     {
         if (damageDealt >= 2 || currentState == KnightActionState.HeavyAttack)
         {
-            AudioManager.Play(SoundID.FleshHitHeavy, 1.0f);
+            AudioManager.Play(SoundID.ArmorClang, 1.0f);
+            AudioManager.Play(SoundID.FleshHitHeavy, 0.9f);
         }
         else
         {
-            AudioManager.Play(SoundID.FleshHit, 0.85f);
+            AudioManager.Play(SoundID.ArmorClang, 0.85f);
+            AudioManager.Play(SoundID.FleshHit, 0.75f);
         }
 
         if (currentState == KnightActionState.HeavyAttack && heavyAttackEffects != null)

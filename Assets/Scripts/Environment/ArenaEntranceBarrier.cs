@@ -100,3 +100,4 @@ public class ArenaEntranceBarrier : MonoBehaviour
         if (barrierCollider != null) barrierCollider.enabled = false;
     }
 }
+

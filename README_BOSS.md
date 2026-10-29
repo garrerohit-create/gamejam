@@ -130,3 +130,4 @@
    - Boss plays collapse animation and death roar.
    - `ArenaEntranceBarrier` unseals and dissolves.
    - `EndLevelGate` at $X = 84.0$ activates portal passage. Walk player into gate to trigger level victory sequence.
+

@@ -478,6 +478,8 @@ public class ArmoredGuardAI : MonoBehaviour
         if (currentState == ArmoredGuardState.Dead)
             return;
 
+        AudioManager.Play(SoundID.ArmorClang, 1.0f);
+
         if (activeCombatRoutine != null)
         {
             StopCoroutine(activeCombatRoutine);
