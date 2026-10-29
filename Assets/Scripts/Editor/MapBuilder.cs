@@ -138,22 +138,33 @@ public static class MapBuilder
         // Zone 1 Enemy (Armored Guard #1) - standing at Y = -0.25 on top of rock
         SpawnEnemy(enemiesRoot, new Vector3(7.5f, -0.26f, 0f), 3.5f);
 
-        // 6. ZONE 2: Spiked Chasm & Floating Stepping Stones (Parkour Gap 1)
-        // Lethal Spike Beds along the bottom of the chasm
-        CreateSpikeHazard(obstaclesRoot, "Spikes_Jagged_Ridge_29", new Vector2(15.5f, -6.0f), new Vector2(6.5f, 2.8f));
-        CreateSpikeHazard(obstaclesRoot, "Spikes_Jagged_Ridge_31", new Vector2(23.0f, -6.0f), new Vector2(6.0f, 2.5f));
+        // 6. ZONE 2: The Shattered Viaduct of the Damned (Level 1000 Parkour Gauntlet)
+        // Lethal Multi-layered Jagged Spike Beds along the bottom of the chasm
+        CreateSpikeHazard(obstaclesRoot, "Spikes_Jagged_Ridge_29", new Vector2(15.0f, -6.0f), new Vector2(6.5f, 2.8f));
+        CreateSpikeHazard(obstaclesRoot, "Spikes_Jagged_Ridge_31", new Vector2(20.5f, -6.0f), new Vector2(6.5f, 2.8f));
+        CreateSpikeHazard(obstaclesRoot, "Spikes_Stone_22", new Vector2(25.0f, -5.8f), new Vector2(5.5f, 2.5f));
 
-        // Stepping Stones (Colliders precisely aligned with top rock surfaces, comfortable gaps)
-        // Island 1: Low stone step (Visual Top: -0.01, spans X: 13.20 to 16.80)
-        CreatePlatform(platformsRoot, "Platform_Medium_Stone_1", new Vector2(15.0f, -1.4f), new Vector2(3.60f, 1.20f), new Vector2(0f, 0.787f), groundLayer);
-        // Island 2: Mid stone step (Visual Top: 1.39, spans X: 17.55 to 22.05)
-        CreatePlatform(platformsRoot, "Platform_Rock_Medium_1", new Vector2(19.8f, 0.1f), new Vector2(4.50f, 1.20f), new Vector2(0f, 0.688f), groundLayer);
-        // Island 3: High stone step (Visual Top: 2.24, spans X: 22.90 to 25.10)
-        CreatePlatform(platformsRoot, "Platform_Small_Stone_7", new Vector2(24.0f, 1.6f), new Vector2(2.20f, 1.00f), new Vector2(0f, 0.137f), groundLayer);
+        // Broken Viaduct Outcrop (Solid anchor ledge jutting over abyss, Visual Top: -0.01)
+        CreatePlatform(platformsRoot, "Platform_Medium_Stone_1", new Vector2(14.5f, -1.4f), new Vector2(3.60f, 1.20f), new Vector2(0f, 0.787f), groundLayer);
 
-        // Upper Arch Landmark above parkour
-        CreateDecoration(decorRoot, "Gothic_Arch_Ruin_19", new Vector2(19.8f, 4.3f), 1.1f);
-        CreateDecoration(decorRoot, "Hanging_Chain_17", new Vector2(19.5f, 5.3f), 1.0f);
+        // Floating Monolith 1: Wide Levitating Runic Slab with reactive hover (Visual Top: 0.65)
+        CreateFloatingPlatform(platformsRoot, "Stepping_Stone_19", new Vector2(17.8f, 0.0f), new Vector2(1.80f, 0.80f), new Vector2(0f, 0.25f), groundLayer, 0.08f, 1.2f, new Color(1.0f, 0.55f, 0.18f, 1.0f));
+
+        // Floating Monolith 2: Ancient Spire Stepping Stone with runic point light (Visual Top: 1.45)
+        CreateFloatingPlatform(platformsRoot, "Stepping_Stone_12", new Vector2(20.7f, 0.6f), new Vector2(1.20f, 0.80f), new Vector2(0f, 0.45f), groundLayer, 0.07f, 0.95f, new Color(1.0f, 0.45f, 0.15f, 1.0f));
+
+        // Floating Monolith 3: High Obsidian Monolith ascending to crypt plateau (Visual Top: 2.22)
+        CreateFloatingPlatform(platformsRoot, "Stepping_Stone_30", new Vector2(23.6f, 1.0f), new Vector2(1.15f, 0.80f), new Vector2(0f, 0.82f), groundLayer, 0.09f, 1.35f, new Color(1.0f, 0.28f, 0.15f, 1.0f));
+
+        // Gothic ruins & atmospheric set-pieces framing the parkour gap
+        CreateDecoration(decorRoot, "Gothic_Arch_Ruin_19", new Vector2(20.5f, 5.0f), 1.25f);
+        CreateDecoration(decorRoot, "Bridge_Arch_Rock_23", new Vector2(16.5f, 2.8f), 0.9f, sortingOrder: -4);
+        CreateDecoration(decorRoot, "Bridge_Arch_Rock_27", new Vector2(24.2f, 3.5f), 0.85f, sortingOrder: -4);
+
+        // Giant Iron Chains anchoring floating stones from the high arches
+        CreateDecoration(decorRoot, "Hanging_Chain_17", new Vector2(17.8f, 5.2f), 1.1f);
+        CreateDecoration(decorRoot, "Hanging_Chain_18", new Vector2(20.7f, 5.6f), 1.15f);
+        CreateDecoration(decorRoot, "Hanging_Chain_17", new Vector2(23.6f, 5.4f), 1.05f);
 
         // 7. ZONE 3: Crypt Ruins & High Bridge (Multi-tier Area)
         // Landing plateau (Visual Top: 2.80, spans X: 26.10 to 33.50)
@@ -166,7 +177,8 @@ public static class MapBuilder
         CreateStairsPlatform(platformsRoot, new Vector2(34.2f, 2.6f), groundLayer);
 
         // High Ruin Bridge: Elevated combat ledge (Visual Top: 4.76, spans X: 38.25 to 44.90)
-        CreatePlatform(platformsRoot, "Platform_Large_Stone_13", new Vector2(40.5f, 4.2f), new Vector2(6.65f, 1.20f), new Vector2(1.075f, -0.04f), groundLayer);
+        var highBridge = CreatePlatform(platformsRoot, "Platform_Large_Stone_13", new Vector2(40.5f, 4.2f), new Vector2(6.65f, 1.20f), new Vector2(1.075f, -0.04f), groundLayer);
+        CreateRuneLight(highBridge, new Vector3(3.7f, 1.2f, 0f), new Color(1.0f, 0.55f, 0.2f, 1.0f), 1.4f, 4.5f);
 
         // High bridge decorations
         CreateDecoration(decorRoot, "Stone_Pillar_14", new Vector2(44.2f, 5.8f), 1.0f);
@@ -178,21 +190,37 @@ public static class MapBuilder
         // Zone 3 Enemy (Armored Guard #2 on high bridge)
         SpawnEnemy(enemiesRoot, new Vector3(41.0f, 4.76f, 0f), 3.5f);
 
-        // 8. ZONE 4: The Descent Across the Spiked Abyss (Precision Parkour Gap 2)
-        // Giant Spiked Pit below
-        CreateSpikeHazard(obstaclesRoot, "Spikes_Jagged_Ridge_24", new Vector2(51.0f, -5.8f), new Vector2(6.2f, 2.6f));
-        CreateSpikeHazard(obstaclesRoot, "Spikes_Stone_21", new Vector2(56.5f, -5.8f), new Vector2(4.5f, 2.2f));
+        // 8. ZONE 4: The Abyssal Cascade — Precision Descent Gauntlet (Level 1000 Parkour)
+        // Giant Overlapping Spiked Abyss below
+        CreateSpikeHazard(obstaclesRoot, "Spikes_Jagged_Ridge_24", new Vector2(48.5f, -5.8f), new Vector2(6.5f, 2.8f));
+        CreateSpikeHazard(obstaclesRoot, "Spikes_Stone_21", new Vector2(53.5f, -5.8f), new Vector2(5.5f, 2.4f));
+        CreateSpikeHazard(obstaclesRoot, "Spikes_Jagged_Ridge_31", new Vector2(57.5f, -5.8f), new Vector2(5.0f, 2.5f));
 
-        // Stepping stone platforms descending towards arena
-        // Step D: High descent platform (Visual Top: 3.55, spans X: 45.38 to 49.63)
-        CreatePlatform(platformsRoot, "Platform_Medium_Stone_4", new Vector2(47.5f, 2.7f), new Vector2(4.25f, 1.20f), new Vector2(0f, 0.550f), groundLayer);
-        // Step E: Mid descent stepping stone (Visual Top: 2.16, spans X: 51.10 to 53.30)
-        CreatePlatform(platformsRoot, "Platform_Small_Stone_8", new Vector2(52.2f, 1.4f), new Vector2(2.20f, 1.00f), new Vector2(0f, 0.262f), groundLayer);
-        // Step F: Low landing platform before arena (Visual Top: 1.49, spans X: 53.95 to 58.45)
-        CreatePlatform(platformsRoot, "Platform_Rock_Medium_2", new Vector2(56.2f, 0.0f), new Vector2(4.50f, 1.20f), new Vector2(0f, 0.888f), groundLayer);
+        // Cascading 5-tier Descent:
+        // Tier 1: Ruined High Viaduct Ledge (Visual Top: 3.95)
+        CreatePlatform(platformsRoot, "Platform_Medium_Stone_4", new Vector2(47.2f, 2.8f), new Vector2(4.25f, 1.20f), new Vector2(0f, 0.550f), groundLayer);
 
-        // Checkpoint 2
-        CreateCheckpoint(platformsRoot, new Vector3(56.2f, 1.5f, 0f));
+        // Tier 2: Levitating Ruin Monolith 1 (Hovering rune rock, Visual Top: 2.70)
+        CreateFloatingPlatform(platformsRoot, "Stepping_Stone_18", new Vector2(50.8f, 1.9f), new Vector2(1.10f, 0.70f), new Vector2(0f, 0.45f), groundLayer, 0.08f, 1.1f, new Color(1.0f, 0.50f, 0.15f, 1.0f));
+
+        // Tier 3: Floating Shattered Rock 2 (Mid chasm stepping stone, Visual Top: 1.66)
+        CreateFloatingPlatform(platformsRoot, "Platform_Small_Stone_8", new Vector2(53.6f, 1.0f), new Vector2(2.20f, 0.80f), new Vector2(0f, 0.262f), groundLayer, 0.06f, 1.4f, new Color(1.0f, 0.45f, 0.15f, 1.0f));
+
+        // Tier 4: Levitating Ruin Monolith 3 (Low floating rune slab, Visual Top: 0.70)
+        CreateFloatingPlatform(platformsRoot, "Stepping_Stone_26", new Vector2(56.3f, 0.2f), new Vector2(1.40f, 0.60f), new Vector2(0f, 0.20f), groundLayer, 0.07f, 1.25f, new Color(1.0f, 0.30f, 0.15f, 1.0f));
+
+        // Tier 5: Arena Gateway Arrival Shelf (Solid foundation, Visual Top: 0.59)
+        CreatePlatform(platformsRoot, "Platform_Rock_Medium_2", new Vector2(58.2f, -0.9f), new Vector2(3.60f, 1.20f), new Vector2(0f, 0.888f), groundLayer);
+
+        // Suspended Iron Chains & Background Viaduct Arches
+        CreateDecoration(decorRoot, "Bridge_Arch_Rock_21", new Vector2(48.5f, 1.2f), 0.95f, sortingOrder: -4);
+        CreateDecoration(decorRoot, "Bridge_Arch_Rock_23", new Vector2(54.0f, 0.4f), 0.9f, sortingOrder: -4);
+        CreateDecoration(decorRoot, "Stone_Pillar_14", new Vector2(45.5f, 4.8f), 1.0f);
+        CreateDecoration(decorRoot, "Hanging_Chain_18", new Vector2(50.8f, 6.2f), 1.1f);
+        CreateDecoration(decorRoot, "Hanging_Chain_17", new Vector2(56.3f, 5.0f), 1.05f);
+
+        // Checkpoint 2 on arrival shelf before the boss arena
+        CreateCheckpoint(platformsRoot, new Vector3(57.5f, 1.6f, 0f));
 
         // 9. ZONE 5: The Skull Throne Arena (Final Combat Arena)
         // Seamless Arena Floor (Visual Top: -0.08, spanning X: 59.00 to 86.00 continuous)
@@ -205,6 +233,7 @@ public static class MapBuilder
         CreateDecoration(decorRoot, "Gravestone_Cross_11", new Vector2(63.0f, 0.65f), 1.0f);
         CreateDecoration(decorRoot, "Gravestone_Cross_15", new Vector2(82.5f, 0.65f), 1.0f);
         CreateDecoration(decorRoot, "Hanging_Chain_17", new Vector2(73.0f, 5.8f), 1.0f);
+        CreateRuneLight(decorRoot, new Vector3(74.5f, 4.0f, 0f), new Color(1.0f, 0.12f, 0.12f, 1.0f), 2.2f, 8.5f);
 
         // Arena Vanguard Guard
         SpawnEnemy(enemiesRoot, new Vector3(66.0f, -0.08f, 0f), 3.5f);
@@ -339,6 +368,40 @@ public static class MapBuilder
         return obj;
     }
 
+    private static GameObject CreateFloatingPlatform(GameObject parent, string spriteName, Vector2 pos, Vector2 colSize, Vector2 colOffset, int layer, float bobAmp = 0.08f, float bobFreq = 1.2f, Color? runeLightColor = null)
+    {
+        var obj = CreatePlatform(parent, spriteName, pos, colSize, colOffset, layer);
+        
+        var floater = obj.AddComponent<FloatingRuinPlatform>();
+        var ampField = typeof(FloatingRuinPlatform).GetField("bobAmplitude", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
+        if (ampField != null) ampField.SetValue(floater, bobAmp);
+        var freqField = typeof(FloatingRuinPlatform).GetField("bobFrequency", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
+        if (freqField != null) freqField.SetValue(floater, bobFreq);
+
+        if (runeLightColor.HasValue)
+        {
+            CreateRuneLight(obj, new Vector3(0f, colOffset.y + 0.15f, 0f), runeLightColor.Value, 1.35f, 3.8f);
+        }
+
+        return obj;
+    }
+
+    private static GameObject CreateRuneLight(GameObject parent, Vector3 localPos, Color color, float intensity, float radius)
+    {
+        var lightObj = new GameObject("RuneLight");
+        lightObj.transform.SetParent(parent.transform);
+        lightObj.transform.localPosition = localPos;
+
+        var light = lightObj.AddComponent<UnityEngine.Rendering.Universal.Light2D>();
+        light.lightType = UnityEngine.Rendering.Universal.Light2D.LightType.Point;
+        light.color = color;
+        light.intensity = intensity;
+        light.pointLightOuterRadius = radius;
+        light.pointLightInnerRadius = radius * 0.15f;
+
+        return lightObj;
+    }
+
     private static GameObject CreateCheckpoint(GameObject parent, Vector3 pos)
     {
         var obj = new GameObject("Checkpoint");
@@ -350,6 +413,8 @@ public static class MapBuilder
         if (sprite != null) sr.sprite = sprite;
         sr.sortingOrder = 2;
         sr.color = new Color(0.4f, 1.0f, 0.7f, 0.95f); // Visible luminous emerald runic cross marker
+
+        CreateRuneLight(obj, new Vector3(0f, 0.45f, 0f), new Color(0.2f, 1.0f, 0.65f, 1.0f), 1.6f, 4.2f);
 
         var col = obj.AddComponent<BoxCollider2D>();
         col.size = new Vector2(3f, 4f);
