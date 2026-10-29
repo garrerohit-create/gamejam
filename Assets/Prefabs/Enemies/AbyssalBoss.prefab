@@ -239,12 +239,19 @@ MonoBehaviour:
   chaseSpeedPhase1: 3.8
   chaseSpeedPhase2: 5.5
   chaseSpeedPhase3: 6.2
+  stalkSpeedPhase1: 2
+  stalkSpeedPhase2: 2.8
+  stalkSpeedPhase3: 3.6
   attackRangeMelee: 3.8
   attackRangeSlam: 5.8
   cleaveDamage: 3
   slamDamage: 4
   cataclysmDamage: 6
   shockwaveDamage: 3
+  thrustDamage: 4
+  whirlwindDamage: 4
+  fissureDamage: 3
+  counterDamage: 3
   attackCooldownPhase1: 1.25
   attackCooldownPhase2: 0.65
   attackCooldownPhase3: 0.42

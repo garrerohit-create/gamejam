@@ -7,6 +7,9 @@ public class BossAttackHitbox : MonoBehaviour
     [SerializeField] private int damage = 2;
     [SerializeField] private bool isParryable = true;
     private Collider2D hitboxCollider;
+    private BoxCollider2D boxCol;
+    private Vector2 defaultSize = new Vector2(2.4f, 2.8f);
+    private Vector2 defaultOffset = Vector2.zero;
     private readonly HashSet<Collider2D> alreadyDamaged = new HashSet<Collider2D>();
     private int facingDirection = -1;
 
@@ -15,8 +18,17 @@ public class BossAttackHitbox : MonoBehaviour
     private void Awake()
     {
         hitboxCollider = GetComponent<Collider2D>();
-        hitboxCollider.isTrigger = true;
-        hitboxCollider.enabled = false;
+        boxCol = hitboxCollider as BoxCollider2D;
+        if (boxCol != null)
+        {
+            defaultSize = boxCol.size;
+            defaultOffset = boxCol.offset;
+        }
+        if (hitboxCollider != null)
+        {
+            hitboxCollider.isTrigger = true;
+            hitboxCollider.enabled = false;
+        }
     }
 
     public void SetFacing(int dir)
@@ -25,11 +37,18 @@ public class BossAttackHitbox : MonoBehaviour
         transform.localPosition = new Vector3(Mathf.Abs(transform.localPosition.x) * facingDirection, transform.localPosition.y, 0f);
     }
 
-    public void EnableHitbox(int dmg, bool parryable = true)
+    public void EnableHitbox(int dmg, bool parryable = true, Vector2? customSize = null, Vector2? customOffset = null)
     {
         damage = dmg;
         isParryable = parryable;
         alreadyDamaged.Clear();
+
+        if (boxCol != null)
+        {
+            boxCol.size = customSize ?? defaultSize;
+            boxCol.offset = customOffset ?? defaultOffset;
+        }
+
         if (hitboxCollider != null)
         {
             hitboxCollider.enabled = true;
@@ -39,6 +58,11 @@ public class BossAttackHitbox : MonoBehaviour
     public void DisableHitbox()
     {
         alreadyDamaged.Clear();
+        if (boxCol != null)
+        {
+            boxCol.size = defaultSize;
+            boxCol.offset = defaultOffset;
+        }
         if (hitboxCollider != null)
         {
             hitboxCollider.enabled = false;

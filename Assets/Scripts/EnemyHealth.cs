@@ -14,6 +14,8 @@ public class EnemyHealth : MonoBehaviour
 
     public event Action<int> OnDamaged;
     public event Action OnDeath;
+    public delegate bool DamageFilterDelegate(int damage);
+    public event DamageFilterDelegate OnDamageFilter;
 
     private bool isDying;
 
@@ -54,6 +56,13 @@ public class EnemyHealth : MonoBehaviour
     {
         if (damage <= 0 || isDying)
             return;
+
+        // Check if enemy has a damage filter (e.g. Boss defensive guard / parry stance)
+        if (OnDamageFilter != null && !OnDamageFilter(damage))
+        {
+            // Damage blocked / deflected by defensive stance
+            return;
+        }
 
         currentHealth -= damage;
         currentHealth = Mathf.Max(0, currentHealth);
