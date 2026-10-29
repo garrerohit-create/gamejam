@@ -6,6 +6,7 @@
 ### Encounter Overview
 - **Boss Title**: `The Infernal Executioner — Warden of the Damned`
 - **Total Max Health**: `60 HP`
+- **Scale & Physical Dimensions**: `Scale = (1.55, 1.55, 1.0)`, Height = `5.58 units` (Towering over the Knight)
 - **Arena Boundaries**:
   - Entrance Boundary Wall: `X = 58.5` (Seals upon boss awakening, dissipates upon defeat)
   - Arena Landing Point: `X = 73.5, Y = -0.08`
@@ -105,13 +106,15 @@
 | `chaseSpeedPhase1` | `3.8` | Locomotion walk speed in Phase 1 |
 | `chaseSpeedPhase2` | `5.2` | Locomotion run speed in Phase 2 |
 | `chaseSpeedPhase3` | `6.2` | Locomotion sprint speed in Phase 3 |
+| `attackRangeMelee` | `3.8` | Melee cleave trigger distance (scaled for giant reach) |
+| `attackRangeSlam` | `5.8` | Slam trigger distance |
 | `attackCooldownPhase1`| `1.25s` | Recovery pause between actions in Phase 1 |
 | `attackCooldownPhase2`| `0.70s` | Recovery pause between actions in Phase 2 |
 | `attackCooldownPhase3`| `0.42s` | Recovery pause between actions in Phase 3 |
-| `cleaveDamage` | `2` | Base melee cleave damage |
-| `slamDamage` | `3` | Base ground slam damage |
-| `cataclysmDamage` | `4` | Phase 3 ultimate slam damage |
-| `shockwaveDamage` | `2` | Hellfire projectile damage |
+| `cleaveDamage` | `3` | Base melee cleave damage (30% player health) |
+| `slamDamage` | `4` | Base ground slam damage (40% player health) |
+| `cataclysmDamage` | `6` | Phase 3 ultimate slam damage (60% player health) |
+| `shockwaveDamage` | `3` | Hellfire projectile damage (30% player health) |
 
 ---
 

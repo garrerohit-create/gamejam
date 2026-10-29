@@ -370,6 +370,7 @@ public static class MapBuilder
 
         var boss = (GameObject)PrefabUtility.InstantiatePrefab(prefab, parent.transform);
         boss.transform.position = pos;
+        boss.transform.localScale = new Vector3(1.55f, 1.55f, 1.0f);
     }
 
     private static void SpawnEndGate(GameObject parent, Vector3 pos)

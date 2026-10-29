@@ -33,14 +33,14 @@ public class BossAI : MonoBehaviour
     [SerializeField] private float chaseSpeedPhase1 = 3.8f;
     [SerializeField] private float chaseSpeedPhase2 = 5.2f;
     [SerializeField] private float chaseSpeedPhase3 = 6.2f;
-    [SerializeField] private float attackRangeMelee = 2.8f;
-    [SerializeField] private float attackRangeSlam = 4.8f;
+    [SerializeField] private float attackRangeMelee = 3.8f;
+    [SerializeField] private float attackRangeSlam = 5.8f;
 
     [Header("Combat Stats")]
-    [SerializeField] private int cleaveDamage = 2;
-    [SerializeField] private int slamDamage = 3;
-    [SerializeField] private int cataclysmDamage = 4;
-    [SerializeField] private int shockwaveDamage = 2;
+    [SerializeField] private int cleaveDamage = 3;
+    [SerializeField] private int slamDamage = 4;
+    [SerializeField] private int cataclysmDamage = 6;
+    [SerializeField] private int shockwaveDamage = 3;
 
     [Header("Attack Cooldowns")]
     [SerializeField] private float attackCooldownPhase1 = 1.25f;

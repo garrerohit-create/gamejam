@@ -33,7 +33,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 74.5, y: 5.8, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1.55, y: 1.55, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 8038626282713087095}
@@ -239,12 +239,12 @@ MonoBehaviour:
   chaseSpeedPhase1: 3.8
   chaseSpeedPhase2: 5.5
   chaseSpeedPhase3: 6.2
-  attackRangeMelee: 2.6
-  attackRangeSlam: 4.2
-  cleaveDamage: 2
-  slamDamage: 3
-  cataclysmDamage: 4
-  shockwaveDamage: 2
+  attackRangeMelee: 3.8
+  attackRangeSlam: 5.8
+  cleaveDamage: 3
+  slamDamage: 4
+  cataclysmDamage: 6
+  shockwaveDamage: 3
   attackCooldownPhase1: 1.25
   attackCooldownPhase2: 0.65
   attackCooldownPhase3: 0.42
