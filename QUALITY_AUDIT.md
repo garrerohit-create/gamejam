@@ -48,3 +48,4 @@ However, several critical gaps separate this prototype from a **premium, cohesiv
 - Live play mode simulation via MCP `execute_code`.
 - Performance & GC allocation audit.
 - Generate `QUALITY_IMPROVEMENTS_REPORT.md`.
+

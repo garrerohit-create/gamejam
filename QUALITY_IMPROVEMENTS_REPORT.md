@@ -111,3 +111,4 @@
   1. Add an interactive Main Menu scene (Start Game, Settings, Quit).
   2. Implement an optional Fullscreen / Audio Volume Settings panel in the Pause Menu.
   3. Package a standalone Windows x64 build (`BuildPipeline.BuildPlayer`) for external playtesting.
+

@@ -148,6 +148,18 @@ public class KnightMovement : MonoBehaviour
     {
         EnsureComponents();
 
+        int playerLayer = LayerMask.NameToLayer("Player");
+        int enemyLayer = LayerMask.NameToLayer("Enemy");
+        if (playerLayer != -1)
+        {
+            gameObject.layer = playerLayer;
+        }
+        if (playerLayer != -1 && enemyLayer != -1)
+        {
+            Physics2D.IgnoreLayerCollision(playerLayer, enemyLayer, true);
+            Physics2D.IgnoreLayerCollision(enemyLayer, enemyLayer, true);
+        }
+
         if (rb != null)
             baseGravityScale = rb.gravityScale;
 

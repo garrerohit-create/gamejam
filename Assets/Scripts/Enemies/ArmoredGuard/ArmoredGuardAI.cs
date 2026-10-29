@@ -78,6 +78,8 @@ public class ArmoredGuardAI : MonoBehaviour
     private void Awake()
     {
         EnsureComponents();
+        int enemyLayer = LayerMask.NameToLayer("Enemy");
+        if (enemyLayer != -1) gameObject.layer = enemyLayer;
         spawnPosition = transform.position;
         facingDirection = 1;
         SubscribeToHealth();

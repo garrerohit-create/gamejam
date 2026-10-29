@@ -160,6 +160,8 @@ public class BossAI : MonoBehaviour
     private void Awake()
     {
         EnsureComponents();
+        int enemyLayer = LayerMask.NameToLayer("Enemy");
+        if (enemyLayer != -1) gameObject.layer = enemyLayer;
         LoadDefaultSittingSprites();
 
         if (health != null)
