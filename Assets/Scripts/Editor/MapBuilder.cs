@@ -37,12 +37,19 @@ public static class MapBuilder
             Object.DestroyImmediate(g.gameObject);
         }
 
-        // Ensure AudioManager
+        // Ensure AudioManager & GameManager
         var audioMgr = GameObject.Find("[AudioManager]");
         if (audioMgr == null)
         {
             audioMgr = new GameObject("[AudioManager]");
             audioMgr.AddComponent<AudioManager>();
+        }
+
+        var gameMgr = GameObject.Find("[GameManager]");
+        if (gameMgr == null)
+        {
+            gameMgr = new GameObject("[GameManager]");
+            gameMgr.AddComponent<GameManager>();
         }
 
         // 2. Setup Camera Follow
@@ -85,6 +92,11 @@ public static class MapBuilder
 
         var enemiesRoot = new GameObject("Enemies");
         enemiesRoot.transform.SetParent(root.transform);
+
+        // Atmosphere: Drifting glowing embers & ash
+        var embersObj = new GameObject("Atmospheric_Embers");
+        embersObj.transform.SetParent(root.transform);
+        embersObj.AddComponent<AtmosphericEmbers>();
 
         int groundLayer = LayerMask.NameToLayer("Ground");
         if (groundLayer == -1) groundLayer = 0;

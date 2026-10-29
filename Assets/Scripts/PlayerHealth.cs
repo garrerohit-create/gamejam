@@ -211,6 +211,16 @@ public class PlayerHealth : MonoBehaviour
         NotifyHealthChanged();
     }
 
+    public void RespawnPlayer()
+    {
+        isDead = false;
+        currentHealth = maxHealth;
+        currentHeals = maxHeals;
+        NotifyHealthChanged();
+        OnHealsChanged?.Invoke(currentHeals, maxHeals);
+        onHealsChanged?.Invoke(currentHeals, maxHeals);
+    }
+
     public void Heal(int amount)
     {
         if (isDead || amount <= 0)

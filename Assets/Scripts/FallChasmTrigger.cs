@@ -15,6 +15,11 @@ public class FallChasmTrigger : MonoBehaviour
         hasCheckpoint = true;
     }
 
+    public static Vector3 GetCurrentCheckpoint(Vector3 fallback)
+    {
+        return hasCheckpoint ? currentCheckpoint : fallback;
+    }
+
     private void Awake()
     {
         if (!hasCheckpoint)
