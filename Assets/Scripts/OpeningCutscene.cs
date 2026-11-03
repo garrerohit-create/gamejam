@@ -55,7 +55,7 @@ public sealed class OpeningCutscene : MonoBehaviour
         video.url = Path.Combine(Application.streamingAssetsPath, "OpeningCutscene.mp4");
         video.renderMode = VideoRenderMode.RenderTexture;
         video.targetTexture = frame;
-        video.audioOutputMode = VideoAudioOutputMode.None;
+        video.audioOutputMode = VideoAudioOutputMode.Direct;
         video.timeUpdateMode = VideoTimeUpdateMode.UnscaledGameTime;
         video.isLooping = false;
         video.waitForFirstFrame = true;
@@ -66,7 +66,11 @@ public sealed class OpeningCutscene : MonoBehaviour
         video.Prepare();
     }
 
-    private void OnPrepared(VideoPlayer source) { source.Play(); }
+    private void OnPrepared(VideoPlayer source)
+    {
+        if (source.audioTrackCount > 0) source.SetDirectAudioVolume(0, 1f);
+        source.Play();
+    }
     private void OnFinished(VideoPlayer source) { Finish(); }
     private void OnError(VideoPlayer source, string message) { Debug.LogWarning("Opening video: " + message); Finish(); }
     private void Update()

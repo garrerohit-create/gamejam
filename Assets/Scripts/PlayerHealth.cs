@@ -6,13 +6,13 @@ using UnityEngine.Events;
 public class PlayerHealth : MonoBehaviour
 {
     [Header("Health Settings")]
-    [SerializeField] private int maxHealth = 10;
-    [SerializeField] private int currentHealth = 10;
+    [SerializeField] private int maxHealth = 30;
+    [SerializeField] private int currentHealth = 30;
 
     [Header("Healing Flasks")]
     [SerializeField] private int maxHeals = 4;
     [SerializeField] private int currentHeals = 4;
-    [SerializeField] private int healAmount = 3;
+    [SerializeField] private int healAmount = 10;
     [SerializeField] private KeyCode healKey = KeyCode.Q;
     [SerializeField] private float healCooldown = 0.8f;
 

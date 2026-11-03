@@ -182,7 +182,13 @@ public class KnightMovement : MonoBehaviour
 
     private void HandleHitEnemy(EnemyHealth enemy, int damageDealt)
     {
-        if (damageDealt >= 2 || currentState == KnightActionState.HeavyAttack)
+        // Heavy attacks use only the supplied sword clip; keep their visual hit stop.
+        if (currentState == KnightActionState.HeavyAttack)
+        {
+            if (heavyAttackEffects != null) heavyAttackEffects.TriggerHitStop();
+            return;
+        }
+        if (damageDealt >= 2)
         {
             AudioManager.Play(SoundID.ArmorClang, 1.0f);
             AudioManager.Play(SoundID.FleshHitHeavy, 0.9f);
@@ -473,7 +479,6 @@ public class KnightMovement : MonoBehaviour
             heavyAttackEffects.SetCharging(true, 0f);
         }
 
-        AudioManager.Play(SoundID.SwordCharge, 0.85f);
     }
 
     public void ReleaseHeavyAttack(float chargeDuration)
@@ -495,7 +500,7 @@ public class KnightMovement : MonoBehaviour
             animator.SetTrigger(heavyAttackTrigger);
         }
 
-        AudioManager.Play(SoundID.SwordSwingHeavy, 1.0f);
+        AudioManager.Play(SoundID.SwordSwingHeavy, 1.0f, 0f);
 
         if (heavyAttackEffects != null)
         {
@@ -746,7 +751,6 @@ public class KnightMovement : MonoBehaviour
 
     private void TriggerHeavyImpactVFX()
     {
-        AudioManager.Play(SoundID.HeavyImpact, 1.0f);
         if (heavyAttackEffects != null)
         {
             Vector3 impactPos = transform.position + new Vector3(facingDirection * 1.5f, -2.0f, 0f);
