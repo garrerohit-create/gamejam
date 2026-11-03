@@ -13,9 +13,9 @@ Fight through a ruined underworld, confront Malakor, and open the gateway beyond
 
 </div>
 
-![A knight faces an armored guard beneath a crimson sky](Assets/Screenshots/screenshot-20261029-092523.png)
+![The knight stands on a stone platform above the underworld beneath a crimson sky](docs/images/gameplay.png)
 
-*Development screenshot. The current player health is 30 HP; the image shows an earlier balance pass.*
+*Gameplay screenshot — traverse the shattered platforms of the underworld.*
 
 ## Enter the underworld
 
